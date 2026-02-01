@@ -2,8 +2,10 @@ import { ToDoListState } from "@/types/form.model"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Pencil, Save, X } from "lucide-react"
 
 const ToDoList = ({ title }: { title: string }) => {
+	const [isAdd, setIsAdd] = useState<boolean>(false)
 	const [showForm, setShowForm] = useState<boolean>(false)
 	const [list, setToDoList] = useState([
 		{
@@ -22,18 +24,27 @@ const ToDoList = ({ title }: { title: string }) => {
 	const [form, setForm] = useState<ToDoListState | null>(null)
 
 	const saveItem = () => {
-		setToDoList((prev) => [...prev, { id: prev?.length ? prev.length++ : 0, description: form?.description ?? "" }])
+		if (isAdd) {
+			setToDoList((prev) => [...prev, { id: prev?.length ? prev.length+1 : 0, description: form?.description ?? "" }])
+		} else {
+			setToDoList((prev) =>
+				[...prev]?.map((i) => (i?.id === form?.id ? { id: i?.id, description: form?.description ?? "" } : i)),
+			)
+		}
 		setForm(null)
 		toggleShowForm(false)
 	}
 
-	const editItem = (_index: number) => {
-		// @@@TODO
-		setToDoList((prev) => [...prev, { id: 4, description: "TCKT-4" }])
+	const editItem = (id: number) => {
+		const data = [...list]?.find((i) => i?.id === id)
+		if (data) {
+			toggleShowForm(true)
+			setForm(data)
+		}
 	}
 
-	const removeItem = (index: number) => {
-		const updatedList = list.filter((item) => item.id !== index)
+	const removeItem = (id: number) => {
+		const updatedList = list?.filter((item) => item.id !== id) || []
 		setToDoList(updatedList)
 		setForm(null)
 	}
@@ -48,37 +59,61 @@ const ToDoList = ({ title }: { title: string }) => {
 	const toggleShowForm = (show: boolean) => {
 		setForm(null)
 		setShowForm(show)
+		if (!show) {
+			setIsAdd(false)
+		}
 	}
 
+	// console.log(form)
+	// console.table(list)
+	
 	return (
-		<div id="to-do-list">
+		<div id="to-do-list" className="w-80">
 			<h2 className="font-semibold">{title}</h2>
 
 			{showForm && (
-				<div id="to-do-form" className="flex flex-col m-3 p-3 pb-4 rounded border gap-3">
+				<div id="to-do-form" className="w-full flex flex-col p-3 rounded border gap-3">
 					<span>
 						Description:
 						<Input onChange={handleDescriptionChange} value={form?.description ?? ""}></Input>
 					</span>
-					<div className="flex flex-row gap-1">
-						<Button onClick={saveItem} className="w-1/2">Add</Button>
-						<Button onClick={() => toggleShowForm(false)} className="w-1/2" variant="outline">Cancel</Button>
+					<div className="flex flex-row gap-1 my-1">
+						<Button onClick={saveItem} className="w-1/2">
+							{isAdd ? "Add" : "Save"}
+						</Button>
+						<Button onClick={() => toggleShowForm(false)} className="w-1/2" variant="outline">
+							Cancel
+						</Button>
 					</div>
 				</div>
 			)}
 
-			<ul>
-				{list.map((tickets) => {
+			<ul className="w-full mt-2">
+				{list.map((ticket) => {
 					return (
-						<li key={tickets?.id}>
-							{tickets?.description} <i onClick={(e) => removeItem(tickets?.id)}>x</i>
+						<li key={ticket?.id} className="flex flex-row justify-between hover:bg-gray-100 rounded p-1">
+							<div>{ticket?.description}</div>
+							<div>
+								<Button onClick={(e) => removeItem(ticket?.id)} size="icon-xs" variant="ghost" className="p-0">
+									<X />
+								</Button>
+								<Button onClick={(e) => editItem(ticket?.id)} size="icon-xs" variant="ghost">
+									<Pencil />
+								</Button>
+							</div>
 						</li>
 					)
 				})}
 			</ul>
 
 			{!showForm && (
-				<Button onClick={() => toggleShowForm(true)} className="mt-2">
+				<Button
+					onClick={() => {
+						toggleShowForm(true)
+						setIsAdd(true)
+					}}
+					className="mt-2"
+				>
 					Add new Item
 				</Button>
 			)}
