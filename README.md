@@ -49,6 +49,7 @@ Open http://localhost:5173
 | `yarn run format` | Format code using Prettier |
 
 ## Folder Structure
+```
 my-react-app/
 ├─ public/
 ├─ src/
@@ -63,3 +64,4 @@ my-react-app/
 ├─ package.json
 ├─ tsconfig.json
 └─ vite.config.ts
+```
