@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
 const ToDoList = ({ title }: { title: string }) => {
+	const [showForm, setShowForm] = useState<boolean>(false)
 	const [list, setToDoList] = useState([
 		{
 			id: 1,
@@ -20,9 +21,10 @@ const ToDoList = ({ title }: { title: string }) => {
 	])
 	const [form, setForm] = useState<ToDoListState | null>(null)
 
-	const addItem = () => {
+	const saveItem = () => {
 		setToDoList((prev) => [...prev, { id: prev?.length ? prev.length++ : 0, description: form?.description ?? "" }])
 		setForm(null)
+		toggleShowForm(false)
 	}
 
 	const editItem = (_index: number) => {
@@ -33,6 +35,7 @@ const ToDoList = ({ title }: { title: string }) => {
 	const removeItem = (index: number) => {
 		const updatedList = list.filter((item) => item.id !== index)
 		setToDoList(updatedList)
+		setForm(null)
 	}
 
 	const handleDescriptionChange = (e: { target: { value: string } }) => {
@@ -42,17 +45,27 @@ const ToDoList = ({ title }: { title: string }) => {
 		}
 	}
 
+	const toggleShowForm = (show: boolean) => {
+		setForm(null)
+		setShowForm(show)
+	}
+
 	return (
 		<div id="to-do-list">
-			<h2>{title}</h2>
+			<h2 className="font-semibold">{title}</h2>
 
-			<div id="to-do-form" className="flex flex-col m-3 border p-3 rounded border-gray-600 gap-3">
-				<span>
-					Description:
-					<Input onChange={handleDescriptionChange} value={form?.description ?? ""}></Input>
-				</span>
-				<Button onClick={addItem}>Add</Button>
-			</div>
+			{showForm && (
+				<div id="to-do-form" className="flex flex-col m-3 p-3 pb-4 rounded border gap-3">
+					<span>
+						Description:
+						<Input onChange={handleDescriptionChange} value={form?.description ?? ""}></Input>
+					</span>
+					<div className="flex flex-row gap-1">
+						<Button onClick={saveItem} className="w-1/2">Add</Button>
+						<Button onClick={() => toggleShowForm(false)} className="w-1/2" variant="outline">Cancel</Button>
+					</div>
+				</div>
+			)}
 
 			<ul>
 				{list.map((tickets) => {
@@ -63,6 +76,12 @@ const ToDoList = ({ title }: { title: string }) => {
 					)
 				})}
 			</ul>
+
+			{!showForm && (
+				<Button onClick={() => toggleShowForm(true)} className="mt-2">
+					Add new Item
+				</Button>
+			)}
 		</div>
 	)
 }
