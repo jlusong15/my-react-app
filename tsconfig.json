@@ -2,8 +2,8 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"],
-			"@assets/*": ["./src/assets/*"]
+			"@/*": ["src/*"],           // no './' needed
+      "@assets/*": ["src/assets/*"]
 		},
 		"target": "ESNext",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -20,5 +20,5 @@
 		"noEmit": true,
 		"jsx": "react-jsx"
 	},
-	"include": ["src"]
+	"include": ["src", "src/declarations.d.ts"]
 }

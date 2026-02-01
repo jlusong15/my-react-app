@@ -1,7 +1,7 @@
-import { useState } from "react"
-import viteLogo from "@/assets/vite.svg"
+import viteLogo from "@assets/vite.svg"
 import reactLogo from "@assets/react.svg"
 import { useNavigate } from "react-router"
+import { Button } from "@/components/ui/button"
 
 const Home = () => {
 	let navigate = useNavigate()
@@ -18,7 +18,7 @@ const Home = () => {
 
 	return (
 		<div id="home">
-			Powered by:
+			<span className="text-neutral-400 italic">Powered by:</span>
 			<div className="flex justify-center gap-2">
 				<a href="https://vite.dev" target="_blank">
 					<img src={viteLogo} className="logo" alt="Vite logo" />
@@ -27,18 +27,17 @@ const Home = () => {
 					<img src={reactLogo} className="logo react" alt="React logo" />
 				</a>
 			</div>
-			<h1 className="text-3xl font-bold">Vite + React + TypeScript</h1>
-
+			<h1 className="text-2xl! font-bold pb-3">Vite + React + TypeScript</h1>
 			{links.map((pages, index) => (
-				<button
+				<Button
 					key={index}
 					onClick={() => {
 						navigate(pages.url)
 					}}
-					className="bg-red-700/75! p-3 text-blue-50 font-semibold mt-4 flex justify-center cursor-pointer hover:bg-amber-600! hover:text-amber-950 transition-colors! border-0! w-full"
+					className="flex w-full my-2"
 				>
-					Go to {pages.pageName}
-				</button>
+					Enter {pages.pageName}
+				</Button>
 			))}
 		</div>
 	)
