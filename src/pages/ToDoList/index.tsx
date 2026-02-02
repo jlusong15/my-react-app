@@ -1,44 +1,44 @@
-import { ToDoListState } from "@/types/form.model"
+import { ToDoListInitial, ToDoListState } from "@/types/form.model"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Pencil, Save, X } from "lucide-react"
+import ButtonLoader from "@/components/Button"
+import { Ban, LoaderCircle, Pencil, Save, X } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const ToDoList = ({ title }: { title: string }) => {
+	const [isLoading, setLoading] = useState<boolean>(false)
 	const [isAdd, setIsAdd] = useState<boolean>(false)
+	const [isEdit, setIsEdit] = useState<boolean>(false)
 	const [showForm, setShowForm] = useState<boolean>(false)
-	const [list, setToDoList] = useState([
-		{
-			id: 1,
-			description: "TCKT-1",
-		},
-		{
-			id: 2,
-			description: "TCKT-2",
-		},
-		{
-			id: 3,
-			description: "TCKT-3",
-		},
-	])
+	const [list, setToDoList] = useState(ToDoListInitial)
 	const [form, setForm] = useState<ToDoListState | null>(null)
 
 	const saveItem = () => {
-		if (isAdd) {
-			setToDoList((prev) => [...prev, { id: prev?.length ? prev.length+1 : 0, description: form?.description ?? "" }])
-		} else {
-			setToDoList((prev) =>
-				[...prev]?.map((i) => (i?.id === form?.id ? { id: i?.id, description: form?.description ?? "" } : i)),
-			)
+		const description = form?.description?.trim() ?? ""
+		if (!description) {
+			return
 		}
-		setForm(null)
-		toggleShowForm(false)
+		setLoading(true)
+		const saveFn = () => {
+			if (isAdd) {
+				setToDoList((prev) => [...prev, { id: prev?.length ? prev.length + 1 : 0, description }])
+			} else {
+				setToDoList((prev) => [...prev]?.map((i) => (i?.id === form?.id ? { id: i?.id, description } : i)))
+			}
+			setForm(null)
+			toggleShowForm(false)
+			setLoading(false)
+		}
+		setTimeout(() => {
+			saveFn()
+		}, 6000)
 	}
 
 	const editItem = (id: number) => {
 		const data = [...list]?.find((i) => i?.id === id)
 		if (data) {
-			toggleShowForm(true)
+			setIsEdit(true)
 			setForm(data)
 		}
 	}
@@ -49,11 +49,15 @@ const ToDoList = ({ title }: { title: string }) => {
 		setForm(null)
 	}
 
+	const cancelEdit = () => {
+		toggleShowForm(false)
+		setIsEdit(false)
+		setForm(null)
+	}
+
 	const handleDescriptionChange = (e: { target: { value: string } }) => {
 		const value: string = e?.target?.value || ""
-		if (value) {
-			setForm((prev) => (prev ? { id: prev?.id, description: value } : { id: 0, description: value }))
-		}
+		setForm((prev) => (prev ? { id: prev?.id, description: value } : { id: 0, description: value }))
 	}
 
 	const toggleShowForm = (show: boolean) => {
@@ -61,52 +65,97 @@ const ToDoList = ({ title }: { title: string }) => {
 		setShowForm(show)
 		if (!show) {
 			setIsAdd(false)
+			setIsEdit(false)
 		}
 	}
 
-	// console.log(form)
-	// console.table(list)
-	
 	return (
 		<div id="to-do-list" className="w-80">
 			<h2 className="font-semibold">{title}</h2>
+			<hr className="mt-2" />
+
+			<ul className="w-full mt-2">
+				{list.map((ticket) => {
+					return (
+						<li
+							key={ticket?.id}
+							className={cn("flex flex-row justify-between items-center hover:bg-gray-50 rounded p-1", {
+								"bg-gray-50": isEdit && form?.id === ticket.id,
+							})}
+						>
+							<div>
+								{isEdit && form?.id === ticket.id ? (
+									<Input
+										onChange={handleDescriptionChange}
+										value={form?.description ?? ""}
+										disabled={isLoading}
+										className="bg-white"
+									></Input>
+								) : (
+									<span className="px-3 py-2 inline-block">{ticket?.description}</span>
+								)}
+							</div>
+							{isLoading && isEdit && form?.id === ticket.id ? (
+								<LoaderCircle className="animate-spin" />
+							) : isEdit && form?.id === ticket.id ? (
+								<div>
+									<Button
+										onClick={saveItem}
+										size="icon-sm"
+										variant="ghost"
+										className="p-0"
+										disabled={showForm || isLoading}
+									>
+										<Save />
+									</Button>
+									<Button onClick={cancelEdit} size="icon-sm" variant="ghost" disabled={showForm || isLoading}>
+										<Ban />
+									</Button>
+								</div>
+							) : (
+								<div>
+									<Button
+										onClick={(e) => editItem(ticket?.id)}
+										size="icon-sm"
+										variant="ghost"
+										disabled={showForm || isEdit}
+									>
+										<Pencil />
+									</Button>
+									<Button
+										onClick={(e) => removeItem(ticket?.id)}
+										size="icon-sm"
+										variant="ghost"
+										className="p-0"
+										disabled={showForm || isEdit}
+									>
+										<X />
+									</Button>
+								</div>
+							)}
+						</li>
+					)
+				})}
+			</ul>
 
 			{showForm && (
 				<div id="to-do-form" className="w-full flex flex-col p-3 rounded border gap-3">
 					<span>
 						Description:
-						<Input onChange={handleDescriptionChange} value={form?.description ?? ""}></Input>
+						<Input onChange={handleDescriptionChange} value={form?.description ?? ""} disabled={isLoading}></Input>
 					</span>
 					<div className="flex flex-row gap-1 my-1">
-						<Button onClick={saveItem} className="w-1/2">
+						<ButtonLoader onClick={saveItem} className="w-1/2" isLoading={isLoading}>
 							{isAdd ? "Add" : "Save"}
-						</Button>
-						<Button onClick={() => toggleShowForm(false)} className="w-1/2" variant="outline">
+						</ButtonLoader>
+						<Button onClick={() => toggleShowForm(false)} className="w-1/2" variant="outline" disabled={isLoading}>
 							Cancel
 						</Button>
 					</div>
 				</div>
 			)}
 
-			<ul className="w-full mt-2">
-				{list.map((ticket) => {
-					return (
-						<li key={ticket?.id} className="flex flex-row justify-between hover:bg-gray-100 rounded p-1">
-							<div>{ticket?.description}</div>
-							<div>
-								<Button onClick={(e) => removeItem(ticket?.id)} size="icon-xs" variant="ghost" className="p-0">
-									<X />
-								</Button>
-								<Button onClick={(e) => editItem(ticket?.id)} size="icon-xs" variant="ghost">
-									<Pencil />
-								</Button>
-							</div>
-						</li>
-					)
-				})}
-			</ul>
-
-			{!showForm && (
+			{!showForm && !isEdit && (
 				<Button
 					onClick={() => {
 						toggleShowForm(true)
@@ -114,7 +163,7 @@ const ToDoList = ({ title }: { title: string }) => {
 					}}
 					className="mt-2"
 				>
-					Add new Item
+					Add Item
 				</Button>
 			)}
 		</div>
