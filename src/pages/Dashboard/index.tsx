@@ -1,6 +1,3 @@
-// export default function Dashboard() {
-const Dashboard = ({ children, contentt } : { children: string, contentt: string }) => {
-	return children || contentt || 'wala eh';	
+export default function Dashboard({ children, content }: { children: string; content: string }) {
+	return children || content || <></>
 }
-
-export default Dashboard

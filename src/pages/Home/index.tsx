@@ -5,16 +5,6 @@ import { Button } from "@/components/ui/button"
 
 const Home = () => {
 	let navigate = useNavigate()
-	const links = [
-		{
-			url: "/dashboard",
-			pageName: "Dashboard",
-		},
-		{
-			url: "/to-do-list",
-			pageName: "To Do List",
-		},
-	]
 
 	return (
 		<div id="home">
@@ -28,7 +18,7 @@ const Home = () => {
 				</a>
 			</div>
 			<h1 className="text-2xl! font-bold pb-3">Vite + React + TypeScript</h1>
-			{links.map((pages, index) => (
+			{/* {links.map((pages, index) => (
 				<Button
 					key={index}
 					onClick={() => {
@@ -38,7 +28,7 @@ const Home = () => {
 				>
 					Enter {pages.pageName}
 				</Button>
-			))}
+			))} */}
 		</div>
 	)
 }

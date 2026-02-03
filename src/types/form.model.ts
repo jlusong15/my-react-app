@@ -1,4 +1,4 @@
-export interface ToDoListState {
+export interface ToDoListModel {
 	id: number;
 	description: string;
 }

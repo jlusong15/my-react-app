@@ -1,4 +1,4 @@
-import { ToDoListInitial, ToDoListState } from "@/types/form.model"
+import { ToDoListInitial, ToDoListModel } from "@/types/form.model"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,7 @@ const ToDoList = ({ title }: { title: string }) => {
 	const [isEdit, setIsEdit] = useState<boolean>(false)
 	const [showForm, setShowForm] = useState<boolean>(false)
 	const [list, setToDoList] = useState(ToDoListInitial)
-	const [form, setForm] = useState<ToDoListState | null>(null)
+	const [form, setForm] = useState<ToDoListModel | null>(null)
 
 	const saveItem = () => {
 		const description = form?.description?.trim() ?? ""
@@ -70,8 +70,8 @@ const ToDoList = ({ title }: { title: string }) => {
 	}
 
 	return (
-		<div id="to-do-list" className="w-80">
-			<h2 className="font-semibold">{title}</h2>
+		<div id="to-do-list" className="w-full px-5 mt-3">
+			<h1 className="font-semibold p-3 text-xl w-full">{title}</h1>
 			<hr className="mt-2" />
 
 			<ul className="w-full mt-2">
@@ -89,7 +89,7 @@ const ToDoList = ({ title }: { title: string }) => {
 										onChange={handleDescriptionChange}
 										value={form?.description ?? ""}
 										disabled={isLoading}
-										className="bg-white"
+										className="bg-white w-sm"
 									></Input>
 								) : (
 									<span className="px-3 py-2 inline-block">{ticket?.description}</span>
@@ -139,7 +139,7 @@ const ToDoList = ({ title }: { title: string }) => {
 			</ul>
 
 			{showForm && (
-				<div id="to-do-form" className="w-full flex flex-col p-3 rounded border gap-3">
+				<div id="to-do-form" className="w-full flex flex-col p-3 rounded border gap-3 mt-3">
 					<span>
 						Description:
 						<Input onChange={handleDescriptionChange} value={form?.description ?? ""} disabled={isLoading}></Input>
@@ -161,7 +161,7 @@ const ToDoList = ({ title }: { title: string }) => {
 						toggleShowForm(true)
 						setIsAdd(true)
 					}}
-					className="mt-2"
+					className="mt-2 float-right"
 				>
 					Add Item
 				</Button>
