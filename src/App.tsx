@@ -11,8 +11,7 @@ function App() {
 		<>
 			<MenuNav navigation={NavLinks}/>
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="/" element={<Dashboard />} />
 				<Route path="/to-do-list" element={<ToDoList title="To Do List" />} />
 			</Routes>
 		</>
