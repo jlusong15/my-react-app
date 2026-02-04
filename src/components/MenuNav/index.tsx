@@ -7,7 +7,7 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 	return classes?.filter(Boolean)?.join(" ")
 }
 
-export default function MenuNav({ children, navigation }: { children: string; navigation: NavModel[] }) {
+export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 	return (
 		<Disclosure as="nav" className="relative bg-gray-700">
 			<div className="px-2">
@@ -63,8 +63,9 @@ export default function MenuNav({ children, navigation }: { children: string; na
 								</MenuItem>
 								<MenuItem>
 									<a
-										href="#"
+										href="https://buymeacoffee.com/"
 										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+										target="_blank"
 									>
 										Buy me coffee?
 									</a>

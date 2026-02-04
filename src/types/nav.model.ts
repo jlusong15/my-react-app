@@ -13,4 +13,8 @@ export const NavLinks: NavModel[] = [
 		href: "/to-do-list",
 		name: "To Do List",
 	},
+	{
+		href: "/browse-books",
+		name: "Browse Books",
+	},
 ]
