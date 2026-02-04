@@ -10,7 +10,7 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 export default function MenuNav({ children, navigation }: { children: string; navigation: NavModel[] }) {
 	return (
 		<Disclosure as="nav" className="relative bg-gray-700">
-			<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+			<div className="px-2">
 				<div className="relative flex h-16 items-center justify-between">
 					<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
 						{/* Mobile menu button */}
@@ -42,11 +42,11 @@ export default function MenuNav({ children, navigation }: { children: string; na
 					</div>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 						{/* Profile dropdown */}
-						<Menu as="div" className="relative ml-3">
-							<MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 border border-gray-300 p-2">
+						<Menu as="div" className="relative pr-3">
+							<MenuButton className="group/profile relative flex rounded-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 border border-gray-300 p-2 hover:bg-white/5">
 								<span className="absolute -inset-1.5" />
 								<span className="sr-only">Open user menu</span>
-								<Cat className="text-gray-300" />
+								<Cat className="text-gray-300 group-hover/profile:text-white" />
 							</MenuButton>
 
 							<MenuItems
