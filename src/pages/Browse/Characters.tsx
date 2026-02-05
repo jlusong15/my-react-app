@@ -57,7 +57,6 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 	}
 
 	const handleCharDataModal = (id: string) => {
-		console.log("handleCharDataModal")
 		if (charLoading) {
 			return
 		}
@@ -93,9 +92,9 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 	return (
 		<div>
 			<ul className="grid grid-cols-3 gap-2 list-disc list-inside">
-				{characters?.map((c) => (
-					<Dialog onOpenChange={handleDialogToggle}>
-						<li key={c._id} className="flex flex-row gap-2 items-center">
+				{characters?.map((c, i) => (
+					<Dialog onOpenChange={handleDialogToggle} key={c._id}>
+						<li className="flex flex-row gap-2 items-center">
 							<DialogTrigger
 								className="cursor-pointer hover:text-gray-500"
 								onClick={() => handleCharDataModal(c._id)}
