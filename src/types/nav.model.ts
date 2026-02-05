@@ -14,7 +14,7 @@ export const NavLinks: NavModel[] = [
 		name: "To Do List",
 	},
 	{
-		href: "/browse-books",
-		name: "Browse Books",
+		href: "/browse",
+		name: "Browse",
 	},
 ]
