@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const { VITE_API_PROTOCOL, VITE_API_BASE_URL, VITE_API_VERSION, VITE_API_BEARER } = import.meta.env;
-
 const baseURL = `${VITE_API_PROTOCOL}://${VITE_API_BASE_URL}/${VITE_API_VERSION}`;
-const token = 'rqYQtd11BTST0j63ZT7h';
 
 const api = axios.create({
 	baseURL,
@@ -16,13 +14,24 @@ const api = axios.create({
 api.interceptors.request.use(
 	(config) => {
 
-		if (token) {
+		if (VITE_API_BEARER) {
 			config.headers.Authorization = `Bearer ${VITE_API_BEARER}`;
 		}
 
 		return config;
 	},
 	(error) => Promise.reject(error)
+);
+
+api.interceptors.response.use(
+	(response) => response,
+	(error) => {
+		if (error.response?.status === 401) {
+			console.warn("Unauthorized");
+		}
+
+		return Promise.reject(error);
+	}
 );
 
 export default api;

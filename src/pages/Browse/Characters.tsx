@@ -1,24 +1,35 @@
 import { Spinner } from "@/components/ui/spinner"
 import { mapDocs } from "@/lib/utils"
-import { getCharacters } from "@/services/browse.service"
+import { getCharacterData, getCharacters } from "@/services/browse.service"
 import { CharacterDocsModel } from "@/types/browse.model"
 import { useEffect, useState } from "react"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog"
+import { ChevronsRight } from "lucide-react"
 
-export default function Characters({ onLoad }: { onLoad?: (status: boolean) => void }) {
+export default function Characters({ onLoad, reload }: { onLoad?: (status: boolean) => void; reload?: number }) {
 	const [characters, setCharacters] = useState<CharacterDocsModel[]>()
+	const [charData, setCharData] = useState<CharacterDocsModel | null>()
 	const [loading, setLoading] = useState(true)
+	const [charLoading, setCharLoading] = useState<string | null>(null)
 	const [error, setError] = useState<string | null>(null)
 
-	const handleLoading = (value: boolean) => {
-		setLoading(value)
-		onLoad && onLoad(value)
-	}
-
-	const fetchData = async () => {
+	//#region Requests
+	const fetchList = async () => {
 		handleLoading(true)
+		const filterMinor = (list: CharacterDocsModel[]) => {
+			return list?.filter((x) => x.name !== "MINOR_CHARACTER") || []
+		}
+
 		try {
 			const data = await getCharacters()
-			setCharacters(mapDocs(data))
+			setCharacters(filterMinor(mapDocs(data)))
 		} catch (err) {
 			setError((err as Error).message)
 		} finally {
@@ -26,29 +37,117 @@ export default function Characters({ onLoad }: { onLoad?: (status: boolean) => v
 		}
 	}
 
-	useEffect(() => {
-		fetchData()
-	}, [])
+	const fetchCharData = async (id: string) => {
+		setCharLoading(id)
+		try {
+			const data = await getCharacterData(id)
+			setCharData(mapDocs(data)?.[0])
+		} catch (err) {
+			setError((err as Error).message)
+		} finally {
+			setCharLoading(null)
+		}
+	}
+	//#endregion
 
-	if (!onLoad) {
-	if (loading)
-		return (
-			<p>
-				<Spinner className="float-left mr-2 mt-1" />
-				Loading
-			</p>
-		)
-	if (error) return <p>{error}</p>
-
+	//#region Handlers
+	const handleLoading = (value: boolean) => {
+		setLoading(value)
+		onLoad && onLoad(value)
 	}
 
+	const handleCharDataModal = (id: string) => {
+		console.log("handleCharDataModal")
+		if (charLoading) {
+			return
+		}
+		fetchCharData(id)
+	}
+
+	const handleDialogToggle = (isOpen: boolean) => {
+		if (!isOpen) {
+			setCharData(null)
+			setCharLoading(null)
+		}
+	}
+	//#endregion
+
+	//#region Hooks
+	useEffect(() => {
+		fetchList()
+	}, [reload])
+
+	if (!onLoad) {
+		if (loading)
+			return (
+				<p>
+					<Spinner className="float-left mr-2 mt-1" />
+					Loading
+				</p>
+			)
+		if (error) return <p>{error}</p>
+	}
+	//#region
+
+	//#region HTML start
 	return (
 		<div>
-			<ul>
+			<ul className="grid grid-cols-3 gap-2 list-disc list-inside">
 				{characters?.map((c) => (
-					<li key={c._id}>– {c.name}</li>
+					<Dialog onOpenChange={handleDialogToggle}>
+						<li key={c._id} className="flex flex-row gap-2 items-center">
+							<DialogTrigger
+								className="cursor-pointer hover:text-gray-500"
+								onClick={() => handleCharDataModal(c._id)}
+								disabled={!!charLoading}
+							>
+								{c.name}
+							</DialogTrigger>
+							{charLoading === c._id && <Spinner className="text-gray-500" />}
+						</li>
+						{charData && !charLoading && (
+							<DialogContent>
+								<DialogHeader>
+									<DialogTitle>{charData?.name}</DialogTitle>
+									<hr />
+									<DialogDescription>
+										<ul>
+											<li>
+												<strong>Gender:</strong> {charData?.gender || "Unknown"}
+											</li>
+											<li>
+												<strong>Spouse:</strong> {charData?.spouse || "Unknown"}
+											</li>
+											<li>
+												<strong>Race:</strong> {charData?.race || "Unknown"}
+											</li>
+											<li>
+												<strong>Realm:</strong> {charData?.realm || "Unknown"}
+											</li>
+											<li>
+												<strong>Hair:</strong> {charData?.hair || "Unknown"}
+											</li>
+											<li>
+												<strong>Death:</strong> {charData?.death || "Unknown"}
+											</li>
+											<li>
+												<a
+													className="flex flex-row items-center cursor-pointer hover:text-gray-400 mt-3"
+													href={charData?.wikiUrl}
+													target="_blank"
+												>
+													Go to Wiki <ChevronsRight className="size-4 ml-1" />
+												</a>
+											</li>
+										</ul>
+									</DialogDescription>
+								</DialogHeader>
+							</DialogContent>
+						)}
+					</Dialog>
 				))}
 			</ul>
 		</div>
 	)
+	//#endregion
 }

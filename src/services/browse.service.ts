@@ -9,3 +9,7 @@ export const getCharacters = async () => {
 	const { data } = await api.get("/character");
 	return data;
 };
+export const getCharacterData = async (id: string) => {
+	const { data } = await api.get(`/character/${id}`);
+	return data;
+};
