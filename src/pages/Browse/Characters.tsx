@@ -5,13 +5,16 @@ import { CharacterDocsModel } from "@/types/browse.model"
 import { useEffect, useState } from "react"
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog"
 import { ChevronsRight } from "lucide-react"
+import Button from "@/components/Button"
 
 export default function Characters({ onLoad, reload }: { onLoad?: (status: boolean) => void; reload?: number }) {
 	const [characters, setCharacters] = useState<CharacterDocsModel[]>()
@@ -92,7 +95,7 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 	return (
 		<div>
 			<ul className="grid grid-cols-3 gap-2 list-disc list-inside">
-				{characters?.map((c, i) => (
+				{characters?.map((c) => (
 					<Dialog onOpenChange={handleDialogToggle} key={c._id}>
 						<li className="flex flex-row gap-2 items-center">
 							<DialogTrigger
@@ -107,40 +110,43 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 						{charData && !charLoading && (
 							<DialogContent>
 								<DialogHeader>
-									<DialogTitle>{charData?.name}</DialogTitle>
-									<hr />
-									<DialogDescription>
-										<ul>
-											<li>
-												<strong>Gender:</strong> {charData?.gender || "Unknown"}
-											</li>
-											<li>
-												<strong>Spouse:</strong> {charData?.spouse || "Unknown"}
-											</li>
-											<li>
-												<strong>Race:</strong> {charData?.race || "Unknown"}
-											</li>
-											<li>
-												<strong>Realm:</strong> {charData?.realm || "Unknown"}
-											</li>
-											<li>
-												<strong>Hair:</strong> {charData?.hair || "Unknown"}
-											</li>
-											<li>
-												<strong>Death:</strong> {charData?.death || "Unknown"}
-											</li>
-											<li>
-												<a
-													className="flex flex-row items-center cursor-pointer hover:text-gray-400 mt-3"
-													href={charData?.wikiUrl}
-													target="_blank"
-												>
-													Go to Wiki <ChevronsRight className="size-4 ml-1" />
-												</a>
-											</li>
-										</ul>
-									</DialogDescription>
+									<DialogTitle className="border-b pb-3">{charData?.name}</DialogTitle>
+									<DialogDescription>Get to know the character</DialogDescription>
 								</DialogHeader>
+								<ul>
+									<li>
+										<strong>Gender:</strong> {charData?.gender || "Unknown"}
+									</li>
+									<li>
+										<strong>Spouse:</strong> {charData?.spouse || "Unknown"}
+									</li>
+									<li>
+										<strong>Race:</strong> {charData?.race || "Unknown"}
+									</li>
+									<li>
+										<strong>Realm:</strong> {charData?.realm || "Unknown"}
+									</li>
+									<li>
+										<strong>Hair:</strong> {charData?.hair || "Unknown"}
+									</li>
+									<li>
+										<strong>Death:</strong> {charData?.death || "Unknown"}
+									</li>
+									<li>
+										<a
+											className="flex flex-row items-center cursor-pointer hover:text-gray-500 mt-3"
+											href={charData?.wikiUrl}
+											target="_blank"
+										>
+											Go to Wiki <ChevronsRight className="size-4 ml-1" />
+										</a>
+									</li>
+								</ul>
+								<DialogFooter className="sm:justify-star">
+									<DialogClose asChild>
+										<Button type="button">Close</Button>
+									</DialogClose>
+								</DialogFooter>
 							</DialogContent>
 						)}
 					</Dialog>
