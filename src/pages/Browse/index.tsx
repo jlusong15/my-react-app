@@ -13,8 +13,9 @@ export default function Browse() {
 		<div id="browse" className="w-full px-5 mt-3">
 			<h1 className="font-semibold p-3 text-xl w-full">Browse</h1>
 			<hr className="mt-2" />
-			{/* <h2 className="font-semibold mb-2 mt-3">Books</h2>
-			<Books /> */}
+			<h2 className="font-semibold mb-2 mt-3">Books</h2>
+			<Books />
+			<br />
 			<h2 className="font-semibold mb-2 mt-3 inline-block">Characters</h2>{" "}
 			<RefreshCcw
 				className="ml-1 cursor-pointer size-4 inline-block text-gray-500 hover:text-gray-300 transition"

@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/dialog"
 import { ChevronsRight } from "lucide-react"
 import Button from "@/components/Button"
+import { useAppDispatch } from "@/store/hooks"
+import { setCharacterList } from "@/store/slices/browse/characters"
 
 export default function Characters({ onLoad, reload }: { onLoad?: (status: boolean) => void; reload?: number }) {
 	const [characters, setCharacters] = useState<CharacterDocsModel[]>()
@@ -22,6 +24,7 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 	const [loading, setLoading] = useState(true)
 	const [charLoading, setCharLoading] = useState<string | null>(null)
 	const [error, setError] = useState<string | null>(null)
+	const dispatch = useAppDispatch()
 
 	//#region Requests
 	const fetchList = async () => {
@@ -31,8 +34,11 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 		}
 
 		try {
-			const data = await getCharacters()
-			setCharacters(filterMinor(mapDocs(data)))
+			const payload = await getCharacters()
+			const data = filterMinor(mapDocs(payload))
+			console.log(data)
+			setCharacters(data)
+			dispatch(setCharacterList(data))
 		} catch (err) {
 			setError((err as Error).message)
 		} finally {
@@ -91,7 +97,7 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 	}
 	//#region
 
-	//#region HTML start
+	//#region HTML
 	return (
 		<div>
 			<ul className="grid grid-cols-3 gap-2 list-disc list-inside">
