@@ -12,7 +12,7 @@ import {
 import { Spinner } from "@/components/ui/spinner"
 import { useGetCharactersQuery, useLazyGetCharacterDataQuery } from "@/services/browse.service"
 import { ChevronsRight } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function Characters({ onLoad, reload }: { onLoad?: (status: boolean) => void; reload?: number }) {
 	const [charLoading, setCharLoading] = useState<string | null>(null)
@@ -24,6 +24,7 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 		isFetching: isFetchingList,
 	} = useGetCharactersQuery()
 	const [fetchCharData, { data: charData, reset: resetCharData }] = useLazyGetCharacterDataQuery()
+	const refData = useRef(charData)
 
 	const handleCharDataModal = (id: string) => {
 		if (charLoading) {
@@ -41,8 +42,26 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 	}
 
 	useEffect(() => {
+		refData.current = charData
+	}, [charData])
+
+	useEffect(() => {
 		refetchList()
 	}, [reload])
+
+	useEffect(() => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			if (refData?.current) {
+				e.preventDefault()
+				e.returnValue = ""
+			}
+		}
+
+		window.addEventListener("beforeunload", handleBeforeUnload)
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload)
+		}
+	}, [])
 
 	if (!onLoad) {
 		if (isListLoading || isFetchingList)

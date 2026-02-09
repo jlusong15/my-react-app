@@ -1,5 +1,5 @@
 import { ToDoListInitial, ToDoListModel } from "@/types/form.model"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import ButtonLoader from "@/components/Button"
@@ -13,6 +13,7 @@ const ToDoList = ({ title }: { title: string }) => {
 	const [showForm, setShowForm] = useState<boolean>(false)
 	const [list, setToDoList] = useState(ToDoListInitial)
 	const [form, setForm] = useState<ToDoListModel | null>(null)
+	const refForm = useRef(form)
 
 	const saveItem = () => {
 		const description = form?.description?.trim() ?? ""
@@ -68,6 +69,24 @@ const ToDoList = ({ title }: { title: string }) => {
 			setIsEdit(false)
 		}
 	}
+
+	useEffect(() => {
+		refForm.current = form ?? null
+	}, [form, isAdd, isEdit])
+
+	useEffect(() => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			if (refForm?.current) {
+				e.preventDefault()
+				e.returnValue = ""
+			}
+		}
+
+		window.addEventListener("beforeunload", handleBeforeUnload)
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload)
+		}
+	}, [])
 
 	return (
 		<div id="to-do-list" className="w-full px-5 mt-3">
