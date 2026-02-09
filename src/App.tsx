@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard"
 import ToDoList from "./pages/ToDoList"
 import MenuNav from "./components/MenuNav"
 import Browse from "./pages/Browse"
+import StepperForm from "./pages/Stepper"
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 				<Route path="/" element={<Dashboard children={""} content={""} />} />
 				<Route path="/to-do-list" element={<ToDoList title="To Do List" />} />
 				<Route path="/browse" element={<Browse />} />
+				<Route path="/stepper" element={<StepperForm />} />
 			</Routes>
 		</>
 	)

@@ -17,4 +17,8 @@ export const NavLinks: NavModel[] = [
 		href: "/browse",
 		name: "Browse",
 	},
+	{
+		href: "/stepper",
+		name: "Stepper",
+	},
 ]
