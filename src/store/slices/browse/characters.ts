@@ -1,3 +1,4 @@
+import { browseApi } from "@/services/browse.service"
 import { RootState } from "@/store"
 import { CharacterDocsModel } from "@/types/browse.model"
 import { createSlice } from "@reduxjs/toolkit"
@@ -12,6 +13,11 @@ const charactersSlice = createSlice({
 			state.list = action?.payload || []
 		},
 	},
+	extraReducers: (builder) => {
+		return builder.addMatcher(browseApi.endpoints.getCharacters.matchFulfilled, (state, { payload }) => {
+			state.list = payload || []
+		})
+	}
 })
 
 export const { setCharacterList } = charactersSlice.actions

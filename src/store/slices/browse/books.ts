@@ -1,3 +1,4 @@
+import { browseApi } from "@/services/browse.service"
 import { RootState } from "@/store"
 import { BookDocsModel } from "@/types/browse.model"
 import { createSlice } from "@reduxjs/toolkit"
@@ -12,6 +13,11 @@ const booksSlice = createSlice({
 			state.list = action?.payload || []
 		},
 	},
+	extraReducers: (builder) => {
+		return builder.addMatcher(browseApi.endpoints.getBooks.matchFulfilled, (state, { payload }) => {
+			state.list = payload || []
+		})
+	}
 })
 
 export const { setBookList } = booksSlice.actions

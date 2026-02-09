@@ -1,15 +1,36 @@
 import api from "@/lib/api";
+import { mapDocs } from "@/lib/utils";
+import { BookDocsModel, CharacterDocsModel } from "@/types/browse.model";
 
-export const getBooks = async () => {
-	const { data } = await api.get("/book");
-	return data;
-};
+export const browseApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    // Books
+    getBooks: builder.query<BookDocsModel[], void>({
+      query: () => '/book',
+			transformResponse: (res: any) => mapDocs(res),
+      providesTags: ['Book'],
+    }),
 
-export const getCharacters = async () => {
-	const { data } = await api.get("/character");
-	return data;
-};
-export const getCharacterData = async (id: string) => {
-	const { data } = await api.get(`/character/${id}`);
-	return data;
-};
+    // Characters list
+    getCharacters: builder.query<CharacterDocsModel[], void>({
+      query: () => '/character',
+      providesTags: ['Character'],
+			transformResponse: (res: any) => mapDocs(res),
+    }),
+
+    // Character details
+    getCharacterData: builder.query<CharacterDocsModel, string>({
+      query: (id) => `/character/${id}`,
+			transformResponse: (res: any) => mapDocs(res)?.[0],
+      providesTags: (result, error, id) => [{ type: 'Character', id }],
+    }),
+  }),
+  overrideExisting: false, // prevents re-injection issues
+});
+
+export const {
+  useGetBooksQuery,
+  useGetCharactersQuery,
+  useGetCharacterDataQuery,
+	useLazyGetCharacterDataQuery
+} = browseApi;

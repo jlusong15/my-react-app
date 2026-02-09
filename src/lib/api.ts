@@ -1,37 +1,21 @@
-import axios from "axios";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const { VITE_API_PROTOCOL, VITE_API_BASE_URL, VITE_API_VERSION, VITE_API_BEARER } = import.meta.env;
-const baseURL = `${VITE_API_PROTOCOL}://${VITE_API_BASE_URL}/${VITE_API_VERSION}`;
+const baseUrl = `${VITE_API_PROTOCOL}://${VITE_API_BASE_URL}/${VITE_API_VERSION}`;
 
-const api = axios.create({
-	baseURL,
-	timeout: 10000,
-	headers: {
-		"Content-Type": "application/json",
-	},
-})
-
-api.interceptors.request.use(
-	(config) => {
-
-		if (VITE_API_BEARER) {
-			config.headers.Authorization = `Bearer ${VITE_API_BEARER}`;
-		}
-
-		return config;
-	},
-	(error) => Promise.reject(error)
-);
-
-api.interceptors.response.use(
-	(response) => response,
-	(error) => {
-		if (error.response?.status === 401) {
-			console.warn("Unauthorized");
-		}
-
-		return Promise.reject(error);
-	}
-);
+const api = createApi({
+	reducerPath: 'api',
+	baseQuery: fetchBaseQuery({
+		baseUrl,
+		prepareHeaders: (headers, { getState }) => {
+			if (VITE_API_BEARER) {
+				headers.set('authorization', `Bearer ${VITE_API_BEARER}`);
+			}
+			return headers;
+		},
+	}),
+	tagTypes: ['Character', 'Book'], // ✅ declare all tags here
+	endpoints: () => ({}),
+});
 
 export default api;

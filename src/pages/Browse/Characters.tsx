@@ -1,8 +1,4 @@
-import { Spinner } from "@/components/ui/spinner"
-import { mapDocs } from "@/lib/utils"
-import { getCharacterData, getCharacters } from "@/services/browse.service"
-import { CharacterDocsModel } from "@/types/browse.model"
-import { useEffect, useState } from "react"
+import Button from "@/components/Button"
 import {
 	Dialog,
 	DialogClose,
@@ -13,91 +9,52 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog"
+import { Spinner } from "@/components/ui/spinner"
+import { useGetCharactersQuery, useLazyGetCharacterDataQuery } from "@/services/browse.service"
 import { ChevronsRight } from "lucide-react"
-import Button from "@/components/Button"
-import { useAppDispatch } from "@/store/hooks"
-import { setCharacterList } from "@/store/slices/browse/characters"
+import { useEffect, useState } from "react"
 
 export default function Characters({ onLoad, reload }: { onLoad?: (status: boolean) => void; reload?: number }) {
-	const [characters, setCharacters] = useState<CharacterDocsModel[]>()
-	const [charData, setCharData] = useState<CharacterDocsModel | null>()
-	const [loading, setLoading] = useState(true)
 	const [charLoading, setCharLoading] = useState<string | null>(null)
-	const [error, setError] = useState<string | null>(null)
-	const dispatch = useAppDispatch()
-
-	//#region Requests
-	const fetchList = async () => {
-		handleLoading(true)
-		const filterMinor = (list: CharacterDocsModel[]) => {
-			return list?.filter((x) => x.name !== "MINOR_CHARACTER") || []
-		}
-
-		try {
-			const payload = await getCharacters()
-			const data = filterMinor(mapDocs(payload))
-			console.log(data)
-			setCharacters(data)
-			dispatch(setCharacterList(data))
-		} catch (err) {
-			setError((err as Error).message)
-		} finally {
-			handleLoading(false)
-		}
-	}
-
-	const fetchCharData = async (id: string) => {
-		setCharLoading(id)
-		try {
-			const data = await getCharacterData(id)
-			setCharData(mapDocs(data)?.[0])
-		} catch (err) {
-			setError((err as Error).message)
-		} finally {
-			setCharLoading(null)
-		}
-	}
-	//#endregion
-
-	//#region Handlers
-	const handleLoading = (value: boolean) => {
-		setLoading(value)
-		onLoad && onLoad(value)
-	}
+	const {
+		data: characters,
+		error: errorList,
+		isLoading: isListLoading,
+		refetch: refetchList,
+		isFetching: isFetchingList,
+	} = useGetCharactersQuery()
+	const [fetchCharData, { data: charData, reset: resetCharData }] = useLazyGetCharacterDataQuery()
 
 	const handleCharDataModal = (id: string) => {
 		if (charLoading) {
 			return
 		}
+		setCharLoading(id)
 		fetchCharData(id)
 	}
 
 	const handleDialogToggle = (isOpen: boolean) => {
 		if (!isOpen) {
-			setCharData(null)
 			setCharLoading(null)
+			resetCharData()
 		}
 	}
-	//#endregion
 
-	//#region Hooks
 	useEffect(() => {
-		fetchList()
+		refetchList()
 	}, [reload])
 
 	if (!onLoad) {
-		if (loading)
+		if (isListLoading || isFetchingList)
 			return (
 				<p>
 					<Spinner className="float-left mr-2 mt-1" />
 					Loading
 				</p>
 			)
-		if (error) return <p>{error}</p>
+		if (errorList) return <p>Error</p>
 	}
-	//#region
 
-	//#region HTML
 	return (
 		<div>
 			<ul className="grid grid-cols-3 gap-2 list-disc list-inside">
@@ -113,7 +70,7 @@ export default function Characters({ onLoad, reload }: { onLoad?: (status: boole
 							</DialogTrigger>
 							{charLoading === c._id && <Spinner className="text-gray-500" />}
 						</li>
-						{charData && !charLoading && (
+						{charData && charLoading === charData?._id && (
 							<DialogContent>
 								<DialogHeader>
 									<DialogTitle className="border-b pb-3">{charData?.name}</DialogTitle>
