@@ -1,3 +1,4 @@
+import { TagTypes } from '@/store/tagtype';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const { VITE_API_PROTOCOL, VITE_API_BASE_URL, VITE_API_VERSION, VITE_API_BEARER } = import.meta.env;
@@ -14,7 +15,7 @@ const api = createApi({
 			return headers;
 		},
 	}),
-	tagTypes: ['Character', 'Book'], // ✅ declare all tags here
+	tagTypes: TagTypes,
 	endpoints: () => ({}),
 });
 
