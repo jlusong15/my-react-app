@@ -15,7 +15,7 @@ const FormValues = z.object({
 })
 type FormData = z.infer<typeof FormValues>
 
-export default function Step1() {
+export default function Step1({ onReset }: { onReset?: number }) {
 	const methods = useForm<FormData>({
 		mode: "onChange",
 		resolver: zodResolver(FormValues),
@@ -25,7 +25,7 @@ export default function Step1() {
 			email: "",
 		} as StepperForm1,
 	})
-	const { control, watch, formState } = methods
+	const { control, watch, formState, reset } = methods
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
@@ -38,6 +38,10 @@ export default function Step1() {
 	useEffect(() => {
 		dispatch(setStep1Validity(formState?.isValid as boolean))
 	}, [formState?.isValid])
+
+	useEffect(() => {
+		reset()
+	}, [onReset])
 
 	return (
 		<>

@@ -1,7 +1,10 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAppDispatch } from "@/store/hooks"
+import { setStep2Form, setStep2Validity } from "@/store/slices/stepper/step2"
 import { StepperForm2 } from "@/types/stepper.model"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -12,8 +15,9 @@ const FormValues = z.object({
 })
 type FormData = z.infer<typeof FormValues>
 
-export default function Step2() {
+export default function Step2({ onReset }: { onReset?: number }) {
 	const methods = useForm<FormData>({
+		mode: "onChange",
 		resolver: zodResolver(FormValues),
 		defaultValues: {
 			streetAddress: "",
@@ -21,10 +25,24 @@ export default function Step2() {
 			zipCode: "",
 		} as StepperForm2,
 	})
-	const { control, watch, trigger, formState, handleSubmit } = methods
-	const handleOnSubmit = (data: any) => {
-		console.log("Form data:", data)
-	}
+	const { control, watch, formState, reset } = methods
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		const subscription = watch((value) => {
+			dispatch(setStep2Form(value as StepperForm2))
+		})
+		return () => subscription.unsubscribe()
+	}, [watch])
+
+	useEffect(() => {
+		dispatch(setStep2Validity(formState?.isValid as boolean))
+	}, [formState?.isValid])
+
+	useEffect(() => {
+		reset()
+	}, [onReset])
+
 	return (
 		<>
 			<h2 className="mb-4">Address</h2>

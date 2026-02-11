@@ -1,8 +1,10 @@
-import { Button } from "@/components/ui/button"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAppDispatch } from "@/store/hooks"
+import { setStep3Form, setStep3Validity } from "@/store/slices/stepper/step3"
 import { StepperForm3 } from "@/types/stepper.model"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -14,8 +16,9 @@ const FormValues = z.object({
 })
 type FormData = z.infer<typeof FormValues>
 
-export default function Step3() {
+export default function Step3({ onReset }: { onReset?: number }) {
 	const methods = useForm<FormData>({
+		mode: "onChange",
 		resolver: zodResolver(FormValues),
 		defaultValues: {
 			nameOnCard: "",
@@ -24,10 +27,24 @@ export default function Step3() {
 			cvv: "",
 		} as StepperForm3,
 	})
-	const { control, watch, trigger, formState, handleSubmit } = methods
-	const handleOnSubmit = (data: any) => {
-		console.log("Form data:", data)
-	}
+	const { control, watch, formState, reset } = methods
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		const subscription = watch((value) => {
+			dispatch(setStep3Form(value as StepperForm3))
+		})
+		return () => subscription.unsubscribe()
+	}, [watch])
+
+	useEffect(() => {
+		dispatch(setStep3Validity(formState?.isValid as boolean))
+	}, [formState?.isValid])
+
+	useEffect(() => {
+		reset()
+	}, [onReset])
+
 	return (
 		<>
 			<h2 className="mb-4">Payment</h2>
@@ -95,9 +112,6 @@ export default function Step3() {
 							/>
 						</div>
 					</div>
-					<Button onClick={handleSubmit(handleOnSubmit)} className="mt-2">
-						Test Form
-					</Button>
 				</form>
 			</FormProvider>
 		</>
