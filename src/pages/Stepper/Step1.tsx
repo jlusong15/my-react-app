@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -5,8 +6,8 @@ import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
 
 const FormValues = z.object({
-	firstName: z.string().min(1, { message: "First Name is required" }),
-	lastName: z.string().min(1, { message: "Last Name is required" }),
+	firstName: z.string().min(1, { message: "" }),
+	lastName: z.string().min(1, { message: "" }),
 	email: z.email("Invalid email"),
 })
 type FormData = z.infer<typeof FormValues>
@@ -39,7 +40,7 @@ export default function Step1() {
 									<FormItem>
 										<FormLabel>First Name</FormLabel>
 										<FormControl>
-											<Input id="firstName" type="text" {...field} />
+											<Input {...field} id="firstName" type="text" />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -54,7 +55,7 @@ export default function Step1() {
 									<FormItem>
 										<FormLabel>Last Name</FormLabel>
 										<FormControl>
-											<Input id="lastName" type="text" {...field} />
+											<Input {...field} id="lastName" type="text" />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -70,14 +71,14 @@ export default function Step1() {
 								<FormItem>
 									<FormLabel>Email</FormLabel>
 									<FormControl>
-										<Input id="email" type="text" {...field} />
+										<Input {...field} id="email" type="text" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
 					</div>
-					{/* <Button onClick={handleSubmit(handleOnSubmit)}>Test</Button> */}
+					<Button onClick={handleSubmit(handleOnSubmit)} className="mt-2">Test Form</Button>
 				</form>
 			</FormProvider>
 		</>
