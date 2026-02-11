@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { StepperForm3 } from "@/types/stepper.model"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -21,7 +22,7 @@ export default function Step3() {
 			cardNumber: "",
 			expiry: "",
 			cvv: "",
-		},
+		} as StepperForm3,
 	})
 	const { control, watch, trigger, formState, handleSubmit } = methods
 	const handleOnSubmit = (data: any) => {

@@ -1,7 +1,10 @@
-import { Button } from "@/components/ui/button"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAppDispatch } from "@/store/hooks"
+import { setStep1Form, setStep1Validity } from "@/store/slices/stepper/step1"
+import { StepperForm1 } from "@/types/stepper.model"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -14,18 +17,28 @@ type FormData = z.infer<typeof FormValues>
 
 export default function Step1() {
 	const methods = useForm<FormData>({
+		mode: "onChange",
 		resolver: zodResolver(FormValues),
 		defaultValues: {
 			firstName: "",
 			lastName: "",
 			email: "",
-		},
+		} as StepperForm1,
 	})
-	const { control, watch, trigger, formState, handleSubmit } = methods
-	const handleOnSubmit = (data: any) => {
-		console.log("Form data:", data)
-	}
-	// console.log(formState?.errors)
+	const { control, watch, formState } = methods
+	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		const subscription = watch((value) => {
+			dispatch(setStep1Form(value as StepperForm1))
+		})
+		return () => subscription.unsubscribe()
+	}, [watch])
+
+	useEffect(() => {
+		dispatch(setStep1Validity(formState?.isValid as boolean))
+	}, [formState?.isValid])
+
 	return (
 		<>
 			<h2 className="mb-4">Personal Information</h2>
@@ -78,7 +91,6 @@ export default function Step1() {
 							)}
 						/>
 					</div>
-					<Button onClick={handleSubmit(handleOnSubmit)} className="mt-2">Test Form</Button>
 				</form>
 			</FormProvider>
 		</>

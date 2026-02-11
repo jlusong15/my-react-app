@@ -1,13 +1,15 @@
 import Button from "@/components/Button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { FormSteps } from "@/types/stepper-form.model"
+import { FormSteps } from "@/types/stepper.model"
 import { Check, CreditCard, House, UserRoundPen } from "lucide-react"
 import { ReactNode, useState } from "react"
 import Step1 from "./Step1"
 import Step2 from "./Step2"
 import Step3 from "./Step3"
 import Step4 from "./Step4"
+import { useAppSelector } from "@/store/hooks"
+import { step1Selector } from "@/store/slices/stepper/step1"
 
 export default function StepperForm() {
 	const [currentStep, setCurrentStep] = useState<number>(0)
@@ -23,7 +25,7 @@ export default function StepperForm() {
 		2: <Step3 />,
 		3: <Step4 />,
 	}
-
+	const step1FormValues = useAppSelector(step1Selector)
 	const handleBack = () => {
 		setCurrentStep((p) => p - 1)
 	}
@@ -60,7 +62,7 @@ export default function StepperForm() {
 								</Button>
 							)}
 							{currentStep < 3 && (
-								<Button className="ml-auto" onClick={handleNext}>
+								<Button className="ml-auto" onClick={handleNext} disabled={!step1FormValues?.isValid}>
 									Next
 								</Button>
 							)}

@@ -1,5 +1,6 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { StepperForm2 } from "@/types/stepper.model"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormProvider, useForm } from "react-hook-form"
 import { z } from "zod"
@@ -7,7 +8,7 @@ import { z } from "zod"
 const FormValues = z.object({
 	streetAddress: z.string().min(1, { message: "" }),
 	city: z.string().optional(),
-	zipCode: z.number().nullable().optional(),
+	zipCode: z.string().optional(),
 })
 type FormData = z.infer<typeof FormValues>
 
@@ -17,8 +18,8 @@ export default function Step2() {
 		defaultValues: {
 			streetAddress: "",
 			city: "",
-			zipCode: null,
-		},
+			zipCode: "",
+		} as StepperForm2,
 	})
 	const { control, watch, trigger, formState, handleSubmit } = methods
 	const handleOnSubmit = (data: any) => {
@@ -68,7 +69,7 @@ export default function Step2() {
 									<FormItem>
 										<FormLabel>Zip Code</FormLabel>
 										<FormControl>
-											<Input {...field} id="zipCode" type="number" value={field.value || ""} />
+											<Input {...field} id="zipCode" type="text" />
 										</FormControl>
 										<FormMessage />
 									</FormItem>

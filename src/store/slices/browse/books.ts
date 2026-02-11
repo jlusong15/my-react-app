@@ -1,7 +1,7 @@
 import { browseApi } from "@/services/browse.service"
 import { RootState } from "@/store"
 import { BookDocsModel } from "@/types/browse.model"
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const booksSlice = createSlice({
 	name: "books",
@@ -9,7 +9,7 @@ const booksSlice = createSlice({
 		list: [] as BookDocsModel[]
 	},
 	reducers: {
-		setBookList: (state, action) => {
+		setBookList: (state, action: PayloadAction<BookDocsModel[]>) => {
 			state.list = action?.payload || []
 		},
 	},
