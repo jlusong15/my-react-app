@@ -1,7 +1,7 @@
 import api from "@/lib/api";
 import { mapDocs } from "@/lib/utils";
 import { TagTypeId } from "@/store/tagtype";
-import { IntegratedDataTableDocsModel, IntegratedDataTablePayload } from "@/types/dashboard.model";
+import { IntegratedDataTableDocsModel, IntegratedDataTableModel, IntegratedDataTablePayload } from "@/types/dashboard.model";
 
 export const dashboardApi = api.injectEndpoints({
 	endpoints: (builder) => ({
@@ -13,7 +13,7 @@ export const dashboardApi = api.injectEndpoints({
 		}),
 
 		// Integrated Data Table API
-		getIntegratedDataTableList: builder.query<IntegratedDataTableDocsModel, IntegratedDataTablePayload>({
+		getIntegratedDataTableList: builder.query<IntegratedDataTableModel<IntegratedDataTableDocsModel>, IntegratedDataTablePayload>({
 			query: (params: IntegratedDataTablePayload) => {
 				const p = params as Record<string, string>
 				const queryString = params ? new URLSearchParams(p).toString() : '';
