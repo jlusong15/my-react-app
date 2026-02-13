@@ -3,7 +3,11 @@ import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
-import { IntegratedDataTableModel, IntegratedDataTablePayload } from "@/types/dashboard.model"
+import {
+	IntegratedDataTableDocsModel,
+	IntegratedDataTableModel,
+	IntegratedDataTablePayload,
+} from "@/types/dashboard.model"
 import {
 	ColumnDef,
 	flexRender,
@@ -12,15 +16,38 @@ import {
 	getSortedRowModel,
 	PaginationState,
 	SortingState,
+	TableOptions,
 	useReactTable,
 } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 
-type PaginatedResult<T> = {
-	data?: IntegratedDataTableModel<T>
+// type PaginatedResult<T> = {
+// 	data: {
+// 		docs: T[]
+// 		total: number
+// 		limit: number
+// 		offset: number
+// 		page: number
+// 		pages: number
+// 	}
+// 	isLoading: boolean
+// 	isFetching: boolean
+// }
+
+interface PaginatedResult {
+	data: {
+		// docs: IntegratedDataTableDocsModel[]
+		docs: any
+		total: number
+		limit: number
+		offset: number
+		page: number
+		pages: number
+	}
 	isLoading: boolean
 	isFetching: boolean
 }
+
 export default function IntegratedDataTable<TData, TValue>({
 	title,
 	columns,
@@ -28,7 +55,7 @@ export default function IntegratedDataTable<TData, TValue>({
 }: {
 	title?: string
 	columns: ColumnDef<TData, TValue>[]
-	dataQuery: (arg: IntegratedDataTablePayload) => PaginatedResult<TData>
+	dataQuery: (arg: IntegratedDataTablePayload) => PaginatedResult
 }) {
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,

@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button"
-import { CharacterTableDataModel } from "@/types/dashboard.model"
+import { IntegratedDataTableDocsModel } from "@/types/dashboard.model"
 import { Column, ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 
-const useColSort = (name: string, column: Column<CharacterTableDataModel, unknown>) => {
+const useColSort = (name: string, column: Column<IntegratedDataTableDocsModel, unknown>) => {
 	return (
 		<Button
 			variant="ghost"
@@ -16,7 +16,7 @@ const useColSort = (name: string, column: Column<CharacterTableDataModel, unknow
 	)
 }
 
-export const IntegratedDataTableCols: ColumnDef<CharacterTableDataModel>[] = [
+export const IntegratedDataTableCols: ColumnDef<IntegratedDataTableDocsModel>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => useColSort("Name", column),
