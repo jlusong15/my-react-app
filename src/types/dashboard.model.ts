@@ -5,10 +5,17 @@ export interface CharacterTableDataModel extends CharacterDocsModel {
 }
 
 export interface CharacterTableModel {
-  docs: CharacterTableDataModel[]
-  total: number
-  limit: number
-  offset: number
-  page: number
-  pages: number
+	docs: CharacterTableDataModel[]
+	total: number
+	limit: number
+	offset: number
+	page: number
+	pages: number
+}
+
+export interface IntegratedDataTablePayload {
+	sort?: string;
+	limit?: number
+	offset?: number
+	page?: number
 }

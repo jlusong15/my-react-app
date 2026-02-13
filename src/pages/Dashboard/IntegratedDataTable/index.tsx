@@ -1,40 +1,54 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useGetIntegratedDataTableListQuery } from "@/services/dashboard.service"
 import {
 	ColumnDef,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
-	getPaginationRowModel,
 	getSortedRowModel,
+	PaginationState,
 	SortingState,
 	useReactTable,
 } from "@tanstack/react-table"
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import { IntegratedDataTableCols } from "./columns"
+import { Spinner } from "@/components/ui/spinner"
 
-interface DataTableProps<TData, TValue> {
-	columns: ColumnDef<TData, TValue>[]
-	data: TData[]
-}
-
-export default function IntegratedDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export default function IntegratedDataTable() {
+	const columns = IntegratedDataTableCols
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 10,
+	})
+	const defaultData = useMemo(() => [], [])
+	const { data, isLoading } = useGetIntegratedDataTableListQuery({
+		page: pagination.pageIndex + 1,
+		limit: pagination.pageSize,
+	})
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [globalFilter, setGlobalFilter] = useState<string>("")
 	const table = useReactTable({
-		data,
+		data: data?.docs ?? defaultData,
+		rowCount: data?.total || 0,
 		columns,
+		pageCount: data ? Math.ceil(data.total / data.limit) : -1,
 		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
 		onSortingChange: setSorting,
 		getSortedRowModel: getSortedRowModel(),
 		onGlobalFilterChange: setGlobalFilter,
 		getFilteredRowModel: getFilteredRowModel(),
+		manualPagination: true,
+		onPaginationChange: setPagination,
 		state: {
 			sorting,
 			globalFilter,
+			pagination,
 		},
 	})
+
+	if (isLoading) return <Spinner className="mt-2" />
 
 	return (
 		<div>
