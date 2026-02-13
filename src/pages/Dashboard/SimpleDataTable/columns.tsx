@@ -17,33 +17,35 @@ export const characterCols: ColumnDef<CharacterTableDataModel>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => useColSort("Name", column),
+		size: 180,
 	},
 	{
 		accessorKey: "race",
 		header: ({ column }) => useColSort("Race", column),
+		size: 80,
 	},
-	{
-		accessorKey: "birth",
-		header: ({ column }) => useColSort("Birth", column),
-	},
+	// {
+	// 	accessorKey: "birth",
+	// 	header: ({ column }) => useColSort("Birth", column),
+	// },
 	{
 		accessorKey: "gender",
 		header: ({ column }) => useColSort("Gender", column),
 	},
-	{
-		accessorKey: "death",
-		header: ({ column }) => useColSort("Death", column),
-	},
-	{
-		accessorKey: "height",
-		header: ({ column }) => useColSort("Height", column),
-	},
-	{
-		accessorKey: "realm",
-		header: ({ column }) => useColSort("Realm", column),
-	},
-	{
-		accessorKey: "spouse",
-		header: ({ column }) => useColSort("Spouse", column),
-	},
+	// {
+	// 	accessorKey: "death",
+	// 	header: ({ column }) => useColSort("Death", column),
+	// },
+	// {
+	// 	accessorKey: "height",
+	// 	header: ({ column }) => useColSort("Height", column),
+	// },
+	// {
+	// 	accessorKey: "realm",
+	// 	header: ({ column }) => useColSort("Realm", column),
+	// },
+	// {
+	// 	accessorKey: "spouse",
+	// 	header: ({ column }) => useColSort("Spouse", column),
+	// },
 ]

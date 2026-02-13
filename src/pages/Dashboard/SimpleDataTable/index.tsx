@@ -1,26 +1,24 @@
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
 	ColumnDef,
-	ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
-	GlobalFilterTableState,
 	SortingState,
 	useReactTable,
 } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useState } from "react"
-import { Input } from "@/components/ui/input"
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
 	data: TData[]
 }
 
-export default function CharacterDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export default function SimpleDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [globalFilter, setGlobalFilter] = useState<string>("")
 	const table = useReactTable({
@@ -50,13 +48,13 @@ export default function CharacterDataTable<TData, TValue>({ columns, data }: Dat
 				/>
 			</div>
 			<div className="overflow-auto rounded-md border">
-				<Table>
+				<Table className="w-full table-fixed">
 					<TableHeader className="bg-gray-100">
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow key={headerGroup.id}>
 								{headerGroup.headers.map((header) => {
 									return (
-										<TableHead key={header.id} className="p-0">
+										<TableHead key={header.id} className="p-0" style={{ width: header.getSize() }}>
 											{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)
@@ -69,7 +67,9 @@ export default function CharacterDataTable<TData, TValue>({ columns, data }: Dat
 							table.getRowModel().rows.map((row) => (
 								<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
 									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+										<TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
+										</TableCell>
 									))}
 								</TableRow>
 							))
