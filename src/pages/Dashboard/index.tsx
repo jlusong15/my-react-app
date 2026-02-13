@@ -1,8 +1,9 @@
 import { Spinner } from "@/components/ui/spinner"
-import { useGetSimpleDataTableListQuery } from "@/services/dashboard.service"
+import { useGetIntegratedDataTableListQuery, useGetSimpleDataTableListQuery } from "@/services/dashboard.service"
 import IntegratedDataTable from "./IntegratedDataTable"
 import SimpleDataTable from "./SimpleDataTable"
 import { simpleDataTableCols } from "./SimpleDataTable/columns"
+import { IntegratedDataTableCols } from "./IntegratedDataTable/columns"
 
 export default function Dashboard() {
 	const { data: simpleDataTableData, isLoading: simpleDataLoading } = useGetSimpleDataTableListQuery()
@@ -21,8 +22,11 @@ export default function Dashboard() {
 
 			{/* API Integrated Data Table */}
 			<div className="rounded-md border m-3 p-5">
-				<h2>API Integrated Data Table</h2>
-				<IntegratedDataTable />
+				<IntegratedDataTable
+					title="API Integrated Data Table"
+					columns={IntegratedDataTableCols}
+					dataQuery={useGetIntegratedDataTableListQuery}
+				/>
 			</div>
 		</div>
 	)

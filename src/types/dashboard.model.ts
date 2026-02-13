@@ -1,11 +1,11 @@
 import { CharacterDocsModel } from "./browse.model";
 
-export interface CharacterTableDataModel extends CharacterDocsModel {
-	action?: number
+export interface IntegratedDataTableDocsModel extends CharacterDocsModel {
+	id?: number
 }
 
-export interface CharacterTableModel {
-	docs: CharacterTableDataModel[]
+export interface IntegratedDataTableModel<T> {
+	docs: T[]
 	total: number
 	limit: number
 	offset: number

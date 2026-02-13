@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Spinner } from "@/components/ui/spinner"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { useGetIntegratedDataTableListQuery } from "@/services/dashboard.service"
+import { cn } from "@/lib/utils"
+import { IntegratedDataTableModel, IntegratedDataTablePayload } from "@/types/dashboard.model"
 import {
 	ColumnDef,
 	flexRender,
@@ -13,17 +15,27 @@ import {
 	useReactTable,
 } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
-import { IntegratedDataTableCols } from "./columns"
-import { Spinner } from "@/components/ui/spinner"
 
-export default function IntegratedDataTable() {
-	const columns = IntegratedDataTableCols
+type PaginatedResult<T> = {
+	data?: IntegratedDataTableModel<T>
+	isLoading: boolean
+	isFetching: boolean
+}
+export default function IntegratedDataTable<TData, TValue>({
+	title,
+	columns,
+	dataQuery,
+}: {
+	title?: string
+	columns: ColumnDef<TData, TValue>[]
+	dataQuery: (arg: IntegratedDataTablePayload) => PaginatedResult<TData>
+}) {
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
 		pageSize: 10,
 	})
 	const defaultData = useMemo(() => [], [])
-	const { data, isLoading } = useGetIntegratedDataTableListQuery({
+	const { data, isLoading, isFetching } = dataQuery({
 		page: pagination.pageIndex + 1,
 		limit: pagination.pageSize,
 	})
@@ -48,63 +60,91 @@ export default function IntegratedDataTable() {
 		},
 	})
 
-	if (isLoading) return <Spinner className="mt-2" />
-
 	return (
 		<div>
-			<div className="flex items-center py-4">
-				<Input
-					type="text"
-					value={globalFilter ?? ""}
-					onChange={(e) => setGlobalFilter(e.target.value)}
-					className="max-w-sm"
-					placeholder="Search all columns..."
-				/>
+			<div className="flex">
+				<h2>{title}</h2>
+				{(isFetching || isLoading) && <Spinner className="ml-2 mt-1" />}
 			</div>
-			<div className="overflow-auto rounded-md border">
-				<Table className="w-full">
-					<TableHeader className="bg-gray-100">
-						{table.getHeaderGroups().map((headerGroup) => (
-							<TableRow key={headerGroup.id}>
-								{headerGroup.headers.map((header) => {
-									return (
-										<TableHead key={header.id} className="p-0" style={{ width: header.getSize() }}>
-											{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-										</TableHead>
-									)
-								})}
-							</TableRow>
-						))}
-					</TableHeader>
-					<TableBody>
-						{table.getRowModel().rows?.length ? (
-							table.getRowModel().rows.map((row) => (
-								<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
+
+			{!isLoading && (
+				<>
+					<div className="flex items-center py-4">
+						<Input
+							type="text"
+							value={globalFilter ?? ""}
+							onChange={(e) => setGlobalFilter(e.target.value)}
+							placeholder="Search all columns..."
+							className={cn("max-w-sm", isFetching ? "pointer-events-none opacity-50" : "")}
+						/>
+					</div>
+					<div className="overflow-auto rounded-md border">
+						<Table className="w-full">
+							<TableHeader className="bg-gray-100">
+								{table.getHeaderGroups().map((headerGroup) => (
+									<TableRow key={headerGroup.id}>
+										{headerGroup.headers.map((header) => {
+											return (
+												<TableHead
+													key={header.id}
+													className={cn("p-0", isFetching ? "pointer-events-none opacity-50" : "")}
+													style={{ width: header.getSize() }}
+													onClick={isFetching ? undefined : header.column.getToggleSortingHandler()}
+												>
+													{header.isPlaceholder
+														? null
+														: flexRender(header.column.columnDef.header, header.getContext())}
+												</TableHead>
+											)
+										})}
+									</TableRow>
+								))}
+							</TableHeader>
+							<TableBody>
+								{table.getRowModel().rows?.length ? (
+									table.getRowModel().rows.map((row) => (
+										<TableRow
+											key={row.id}
+											data-state={row.getIsSelected() && "selected"}
+											className={cn(isFetching ? "pointer-events-none opacity-50" : "")}
+										>
+											{row.getVisibleCells().map((cell) => (
+												<TableCell key={cell.id} style={{ width: cell.column.getSize() }}>
+													{flexRender(cell.column.columnDef.cell, cell.getContext())}
+												</TableCell>
+											))}
+										</TableRow>
+									))
+								) : (
+									<TableRow>
+										<TableCell colSpan={columns.length} className="h-24 text-center">
+											No results.
 										</TableCell>
-									))}
-								</TableRow>
-							))
-						) : (
-							<TableRow>
-								<TableCell colSpan={columns.length} className="h-24 text-center">
-									No results.
-								</TableCell>
-							</TableRow>
-						)}
-					</TableBody>
-				</Table>
-			</div>
-			<div className="flex items-center justify-end space-x-2 py-4">
-				<Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-					Previous
-				</Button>
-				<Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-					Next
-				</Button>
-			</div>
+									</TableRow>
+								)}
+							</TableBody>
+						</Table>
+					</div>
+					<div className="flex items-center justify-end space-x-2 py-4">
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => table.previousPage()}
+							disabled={!table.getCanPreviousPage() || isFetching}
+						>
+							Previous
+						</Button>
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={() => table.nextPage()}
+							disabled={!table.getCanNextPage() || isFetching}
+						>
+							Next
+						</Button>
+					</div>
+				</>
+			)}
 		</div>
 	)
 }
