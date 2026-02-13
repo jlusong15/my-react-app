@@ -1,19 +1,18 @@
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
 import { CharacterTableDataModel } from "@/types/dashboard.model"
 import { Column, ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 
 const useColSort = (name: string, column: Column<CharacterTableDataModel, unknown>) => {
 	return (
-		<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="group w-full flex justify-between hover:!bg-transparent">
+		<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="group w-full flex justify-between hover:bg-transparent!">
 			{name}
 			<ArrowUpDown className="ml-2 h-4 w-4 invisible group-hover:visible" />
 		</Button>
 	)
 }
 
-export const characterCols: ColumnDef<CharacterTableDataModel>[] = [
+export const simpleDataTableCols: ColumnDef<CharacterTableDataModel>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => useColSort("Name", column),
@@ -30,7 +29,7 @@ export const characterCols: ColumnDef<CharacterTableDataModel>[] = [
 	// },
 	{
 		accessorKey: "gender",
-		header: ({ column }) => useColSort("Gender", column),
+		header: "Gender"
 	},
 	// {
 	// 	accessorKey: "death",

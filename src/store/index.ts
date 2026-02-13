@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import api from '@/lib/api';
 import browse from "./slices/browse"
 import stepper from "./slices/stepper"
+import dashboard from "./slices/dashboard"
 
 export const store = configureStore({
 	reducer: {
 		[api.reducerPath]: api.reducer,
 		browse,
-		stepper
+		stepper,
+		dashboard
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(api.middleware),
