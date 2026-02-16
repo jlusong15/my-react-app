@@ -1,16 +1,14 @@
-# React + Vite + TypeScript
-A simple React application demonstrating the usage of Vite, TypeScript, TailwindCSS and state management.
+# React/Vite (TypeScript)
+A simple React application demonstrating the usage of Vite, TypeScript, TailwindCSS and RTK Query.
 
 ## Features
 * Strongly typed components with TypeScript
 * Responsive design (e.g., Tailwind CSS)
-* Client-side routing with React Router
-* API integration with TBD
 
 ## Tech Stack
 * Frontend: React + TypeScript, Vite
-* Styling: Tailwind CSS
-* State Management: TBD
+* Styling: Tailwind CSS & Shadcn
+* State Management: RTK Query
 
 Other Tools: ESLint, Prettier, Husky (TBD)
 
@@ -54,11 +52,12 @@ my-react-app/
 ├─ public/
 ├─ src/
 │  ├─ assets/
+│  ├─ lib/
 │  ├─ components/
 │  ├─ pages/
-│  ├─ hooks/
-│  ├─ context/
 │  ├─ types/
+│  ├─ services/
+│  ├─ store/
 │  ├─ utils/
 │  └─ App.tsx
 ├─ package.json
