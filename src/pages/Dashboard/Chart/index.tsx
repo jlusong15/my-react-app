@@ -1,5 +1,3 @@
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
 	ChartContainer,
 	ChartLegend,
@@ -9,7 +7,8 @@ import {
 	type ChartConfig,
 } from "@/components/ui/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { chartData } from "./data"
 
 export const description = "An interactive area chart"
@@ -30,20 +29,23 @@ const chartConfig = {
 
 export function DashboardChart() {
 	const [timeRange, setTimeRange] = useState<String>("7d")
-
-	const filteredData = chartData.filter((item) => {
-		const date = new Date(item.date)
-		const referenceDate = new Date("2024-06-30")
-		let daysToSubtract = 90
-		if (timeRange === "30d") {
-			daysToSubtract = 30
-		} else if (timeRange === "7d") {
-			daysToSubtract = 7
-		}
-		const startDate = new Date(referenceDate)
-		startDate.setDate(startDate.getDate() - daysToSubtract)
-		return date >= startDate
-	})
+	const filteredData = useMemo(
+		() =>
+			chartData.filter((item) => {
+				const date = new Date(item.date)
+				const referenceDate = new Date("2024-06-30")
+				let daysToSubtract = 90
+				if (timeRange === "30d") {
+					daysToSubtract = 30
+				} else if (timeRange === "7d") {
+					daysToSubtract = 7
+				}
+				const startDate = new Date(referenceDate)
+				startDate.setDate(startDate.getDate() - daysToSubtract)
+				return date >= startDate
+			}),
+		[timeRange],
+	)
 
 	return (
 		<>

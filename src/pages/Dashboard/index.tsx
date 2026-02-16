@@ -3,11 +3,11 @@ import { useGetIntegratedDataTableListQuery, useGetSimpleDataTableListQuery } fr
 import { format } from "date-fns"
 import { GridStack } from "gridstack"
 import "gridstack/dist/gridstack.min.css"
+import { DashboardChart } from "./Chart"
 import IntegratedDataTable from "./IntegratedDataTable"
 import { IntegratedDataTableCols } from "./IntegratedDataTable/columns"
 import SimpleDataTable from "./SimpleDataTable"
 import { simpleDataTableCols } from "./SimpleDataTable/columns"
-import { DashboardChart } from "./Chart"
 
 export default function Dashboard() {
 	const today = new Date()
@@ -17,12 +17,12 @@ export default function Dashboard() {
 	return (
 		<div className="container">
 			<div className="p-3 my-2">
-				<h1 className="text-2xl font-semibold">Welcome, Today is {format(today, "PPPP")}!</h1>
+				<h1 className="text-2xl font-semibold">Welcome! Today is {format(today, "PPPP")}!</h1>
 			</div>
 			<div className="grid-stack">
 				<div className="grid-stack-item" gs-w="5" gs-h="3.5">
 					<div className="grid-stack-item-content rounded-md border m-3 p-3 bg-white">
-						<h2>Area Chart</h2>
+						<h2>Visitor Statistics</h2>
 						<DashboardChart />
 					</div>
 				</div>

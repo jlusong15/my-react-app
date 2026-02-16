@@ -16,7 +16,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 
 type QueryResult<TData> = {
 	data?: IntegratedDataTableModel<TData>
@@ -41,17 +41,13 @@ export default function IntegratedDataTable<TData, TValue>({
 	})
 
 	const [sorting, setSorting] = useState<SortingState>([])
-	const [globalFilter, setGlobalFilter] = useState("")
-
-	const defaultData = useMemo<TData[]>(() => [], [])
-
+	const [globalFilter, setGlobalFilter] = useState<string>("")
 	const { data, isLoading, isFetching } = dataQuery({
 		page: pagination.pageIndex + 1,
 		limit: pagination.pageSize,
 	})
-
 	const table = useReactTable<TData>({
-		data: data?.docs ?? defaultData,
+		data: data?.docs ?? [],
 		columns,
 		rowCount: data?.total ?? 0,
 		pageCount: data ? Math.ceil(data.total / data.limit) : -1,
