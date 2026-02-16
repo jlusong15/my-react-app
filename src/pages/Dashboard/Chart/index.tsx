@@ -10,20 +10,9 @@ import {
 } from "@/components/ui/chart"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState } from "react"
+import { chartData } from "./data"
 
 export const description = "An interactive area chart"
-
-const chartData = [
-	{ date: "2024-04-01", desktop: 222, mobile: 150 },
-	{ date: "2024-04-02", desktop: 97, mobile: 180 },
-	{ date: "2024-04-03", desktop: 167, mobile: 120 },
-	{ date: "2024-04-04", desktop: 242, mobile: 260 },
-	{ date: "2024-04-05", desktop: 373, mobile: 290 },
-	{ date: "2024-04-06", desktop: 301, mobile: 340 },
-	{ date: "2024-04-07", desktop: 245, mobile: 180 },
-	{ date: "2024-04-08", desktop: 409, mobile: 320 },
-	{ date: "2024-04-09", desktop: 59, mobile: 110 },
-]
 
 const chartConfig = {
 	visitors: {
@@ -40,7 +29,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function DashboardChart() {
-	const [timeRange, setTimeRange] = useState<String>("90d")
+	const [timeRange, setTimeRange] = useState<String>("7d")
 
 	const filteredData = chartData.filter((item) => {
 		const date = new Date(item.date)
@@ -64,14 +53,14 @@ export function DashboardChart() {
 						<SelectValue placeholder="Last 3 months" />
 					</SelectTrigger>
 					<SelectContent className="rounded-xl">
-						<SelectItem value="90d" className="rounded-lg">
-							Last 3 months
+						<SelectItem value="7d" className="rounded-lg">
+							Last 7 days
 						</SelectItem>
 						<SelectItem value="30d" className="rounded-lg">
 							Last 30 days
 						</SelectItem>
-						<SelectItem value="7d" className="rounded-lg">
-							Last 7 days
+						<SelectItem value="90d" className="rounded-lg">
+							Last 3 months
 						</SelectItem>
 					</SelectContent>
 				</Select>
