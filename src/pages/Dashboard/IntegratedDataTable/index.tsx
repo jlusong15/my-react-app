@@ -39,12 +39,18 @@ export default function IntegratedDataTable<TData, TValue>({
 		pageIndex: 0,
 		pageSize: 10,
 	})
-
 	const [sorting, setSorting] = useState<SortingState>([])
 	const [globalFilter, setGlobalFilter] = useState<string>("")
+	const getSort = (): string => {
+		if (sorting?.length === 0) {
+			return ""
+		}
+		return `${sorting?.[0].id}:${sorting?.[0].desc ? "desc" : "asc"}`
+	}
 	const { data, isLoading, isFetching } = dataQuery({
 		page: pagination.pageIndex + 1,
 		limit: pagination.pageSize,
+		sort: getSort(),
 	})
 	const table = useReactTable<TData>({
 		data: data?.docs ?? [],
@@ -56,7 +62,16 @@ export default function IntegratedDataTable<TData, TValue>({
 			globalFilter,
 			pagination,
 		},
+		initialState: {
+			sorting: [
+				{
+					id: "name",
+					desc: false,
+				},
+			],
+		},
 		manualPagination: true,
+		manualSorting: true,
 		onPaginationChange: setPagination,
 		onSortingChange: setSorting,
 		onGlobalFilterChange: setGlobalFilter,
@@ -64,6 +79,8 @@ export default function IntegratedDataTable<TData, TValue>({
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 	})
+
+	console.log("sorting", sorting)
 
 	return (
 		<div>

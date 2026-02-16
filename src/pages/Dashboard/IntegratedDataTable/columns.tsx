@@ -23,30 +23,30 @@ export const IntegratedDataTableCols: ColumnDef<IntegratedDataTableDocsModel>[] 
 	},
 	{
 		accessorKey: "race",
-		header: ({ column }) => useColSort("Race", column),
+		header: "Race",
 	},
 	{
 		accessorKey: "birth",
-		header: ({ column }) => useColSort("Birth", column),
+		header: "Birth",
 	},
 	{
 		accessorKey: "gender",
-		header: ({ column }) => useColSort("Gender", column),
+		header: "Gender",
 	},
 	{
 		accessorKey: "death",
-		header: ({ column }) => useColSort("Death", column),
+		header: "Death",
 	},
 	{
 		accessorKey: "height",
-		header: ({ column }) => useColSort("Height", column),
+		header: "Height",
 	},
 	{
 		accessorKey: "realm",
-		header: ({ column }) => useColSort("Realm", column),
+		header: "Realm",
 	},
 	{
 		accessorKey: "spouse",
-		header: ({ column }) => useColSort("Spouse", column),
+		header: "Spouse",
 	},
 ]
