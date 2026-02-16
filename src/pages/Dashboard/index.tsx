@@ -1,18 +1,23 @@
 import { Spinner } from "@/components/ui/spinner"
 import { useGetIntegratedDataTableListQuery, useGetSimpleDataTableListQuery } from "@/services/dashboard.service"
+import { format } from "date-fns"
+import { GridStack } from "gridstack"
+import "gridstack/dist/gridstack.min.css"
 import IntegratedDataTable from "./IntegratedDataTable"
+import { IntegratedDataTableCols } from "./IntegratedDataTable/columns"
 import SimpleDataTable from "./SimpleDataTable"
 import { simpleDataTableCols } from "./SimpleDataTable/columns"
-import { IntegratedDataTableCols } from "./IntegratedDataTable/columns"
-import "gridstack/dist/gridstack.min.css"
-import { GridStack } from "gridstack"
 
 export default function Dashboard() {
+	const today = new Date()
 	const { data: simpleDataTableData, isLoading: simpleDataLoading } = useGetSimpleDataTableListQuery()
 	GridStack.init()
 
 	return (
 		<div className="container">
+			<div className="p-3 my-2">
+				<h1 className="text-2xl font-semibold">Welcome, Today is {format(today, "PPPP")}!</h1>
+			</div>
 			<div className="grid-stack">
 				<div className="grid-stack-item" gs-w="4" gs-h="5">
 					<div className="grid-stack-item-content rounded-md border m-3 p-3 bg-white">
