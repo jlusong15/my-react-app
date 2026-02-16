@@ -31,10 +31,10 @@ export const simpleDataTableCols: ColumnDef<CharacterTableDataDocsModel>[] = [
 	// 	accessorKey: "birth",
 	// 	header: ({ column }) => useColSort("Birth", column),
 	// },
-	{
-		accessorKey: "gender",
-		header: "Gender",
-	},
+	// {
+	// 	accessorKey: "gender",
+	// 	header: "Gender",
+	// },
 	// {
 	// 	accessorKey: "death",
 	// 	header: ({ column }) => useColSort("Death", column),

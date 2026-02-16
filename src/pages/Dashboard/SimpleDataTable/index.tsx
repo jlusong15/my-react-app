@@ -34,6 +34,11 @@ export default function SimpleDataTable<TData, TValue>({ columns, data }: DataTa
 			sorting,
 			globalFilter,
 		},
+		initialState: {
+			pagination: {
+				pageSize: 5,
+			},
+		},
 	})
 
 	return (

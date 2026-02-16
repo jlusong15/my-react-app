@@ -12,7 +12,7 @@ function App() {
 		<>
 			<MenuNav navigation={NavLinks} />
 			<Routes>
-				<Route path="/" element={<Dashboard children={""} content={""} />} />
+				<Route path="/" element={<Dashboard />} />
 				<Route path="/to-do-list" element={<ToDoList title="To Do List" />} />
 				<Route path="/browse" element={<Browse />} />
 				<Route path="/stepper" element={<StepperForm />} />
