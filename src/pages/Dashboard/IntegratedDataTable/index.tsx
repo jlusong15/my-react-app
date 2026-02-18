@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { IntegratedDataTableModel, IntegratedDataTablePayload } from "@/types/dashboard.model"
-
+import { debounce } from "lodash"
 import {
 	ColumnDef,
 	ColumnFiltersState,
@@ -17,9 +17,8 @@ import {
 	SortingState,
 	useReactTable,
 } from "@tanstack/react-table"
-
 import { Info } from "lucide-react"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 type QueryResult<TData> = {
 	data?: IntegratedDataTableModel<TData>
@@ -87,6 +86,16 @@ export default function IntegratedDataTable<TData, TValue>({
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 	})
+	const debouncedSetFilter = useMemo(
+		() =>
+			debounce((columnId: string, value: string) => {
+				setColumnFilters((prev) => ({
+					...prev,
+					[columnId]: value,
+				}))
+			}, 500),
+		[],
+	)
 
 	return (
 		<div>
@@ -100,12 +109,7 @@ export default function IntegratedDataTable<TData, TValue>({
 					<div className="flex items-center py-4">
 						<Input
 							type="text"
-							onChange={(e) =>
-								setColumnFilters((prev) => ({
-									...prev,
-									name: e.target.value,
-								}))
-							}
+							onChange={(e) => debouncedSetFilter("name", e.target.value)}
 							placeholder="Search character name..."
 							className={cn("max-w-sm", isFetching && "pointer-events-none opacity-50")}
 						/>
@@ -114,7 +118,7 @@ export default function IntegratedDataTable<TData, TValue>({
 								<Info className="ml-2.5 text-gray-600 hover:text-gray-400 size-5" />
 							</TooltipTrigger>
 							<TooltipContent>
-								<p>Search exact name (case-sensitive)</p>
+								<p>Search exact character name (case-sensitive)</p>
 							</TooltipContent>
 						</Tooltip>
 					</div>

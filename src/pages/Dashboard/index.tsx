@@ -3,6 +3,7 @@ import { useGetIntegratedDataTableListQuery, useGetSimpleDataTableListQuery } fr
 import { format } from "date-fns"
 import { GridStack } from "gridstack"
 import "gridstack/dist/gridstack.min.css"
+import { useEffect } from "react"
 import { DashboardChart } from "./Chart"
 import IntegratedDataTable from "./IntegratedDataTable"
 import { IntegratedDataTableCols } from "./IntegratedDataTable/columns"
@@ -12,7 +13,10 @@ import { simpleDataTableCols } from "./SimpleDataTable/columns"
 export default function Dashboard() {
 	const today = new Date()
 	const { data: simpleDataTableData, isLoading: simpleDataLoading } = useGetSimpleDataTableListQuery()
-	GridStack.init()
+
+	useEffect(() => {
+		GridStack.init()
+	}, [])
 
 	return (
 		<div className="container">
