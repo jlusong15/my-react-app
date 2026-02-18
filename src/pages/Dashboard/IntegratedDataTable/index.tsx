@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { IntegratedDataTableModel, IntegratedDataTablePayload } from "@/types/dashboard.model"
 
@@ -18,8 +18,8 @@ import {
 	useReactTable,
 } from "@tanstack/react-table"
 
-import { useState } from "react"
 import { Info } from "lucide-react"
+import { useState } from "react"
 
 type QueryResult<TData> = {
 	data?: IntegratedDataTableModel<TData>
@@ -45,18 +45,18 @@ export default function IntegratedDataTable<TData, TValue>({
 	const [sorting, setSorting] = useState<SortingState>([])
 	// const [globalFilter, setGlobalFilter] = useState<string>("")
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-	const getSort = (): string => {
-		if (sorting?.length === 0) {
-			return ""
+	const payload = () => {
+		const sort = sorting?.length > 0 ? `${sorting?.[0].id}:${sorting?.[0].desc ? "desc" : "asc"}` : ""
+		const filterKey = columnFilters ? (Object.keys(columnFilters)[0] as keyof typeof columnFilters) : ""
+		const filterValue = columnFilters && filterKey ? (columnFilters?.[filterKey] ?? "") : ""
+		return {
+			page: pagination.pageIndex + 1,
+			limit: pagination.pageSize,
+			sort,
+			[filterKey]: filterValue,
 		}
-		return `${sorting?.[0].id}:${sorting?.[0].desc ? "desc" : "asc"}`
 	}
-	const { data, isLoading, isFetching } = dataQuery({
-		page: pagination.pageIndex + 1,
-		limit: pagination.pageSize,
-		sort: getSort(),
-		name: (columnFilters as any)?.name ?? "",
-	})
+	const { data, isLoading, isFetching } = dataQuery(payload())
 	const table = useReactTable<TData>({
 		data: data?.docs ?? [],
 		columns,
