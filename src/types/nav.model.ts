@@ -21,4 +21,8 @@ export const NavLinks: NavModel[] = [
 		href: "/stepper",
 		name: "Stepper",
 	},
+	{
+		href: "/contact",
+		name: "Contact Me",
+	},
 ]
