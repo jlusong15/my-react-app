@@ -7,6 +7,7 @@ import { IntegratedDataTableModel, IntegratedDataTablePayload } from "@/types/da
 
 import {
 	ColumnDef,
+	ColumnFiltersState,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
@@ -40,7 +41,8 @@ export default function IntegratedDataTable<TData, TValue>({
 		pageSize: 10,
 	})
 	const [sorting, setSorting] = useState<SortingState>([])
-	const [globalFilter, setGlobalFilter] = useState<string>("")
+	// const [globalFilter, setGlobalFilter] = useState<string>("")
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 	const getSort = (): string => {
 		if (sorting?.length === 0) {
 			return ""
@@ -51,6 +53,7 @@ export default function IntegratedDataTable<TData, TValue>({
 		page: pagination.pageIndex + 1,
 		limit: pagination.pageSize,
 		sort: getSort(),
+		name: (columnFilters as any)?.name ?? "",
 	})
 	const table = useReactTable<TData>({
 		data: data?.docs ?? [],
@@ -59,7 +62,8 @@ export default function IntegratedDataTable<TData, TValue>({
 		pageCount: data ? Math.ceil(data.total / data.limit) : -1,
 		state: {
 			sorting,
-			globalFilter,
+			// globalFilter,
+			columnFilters,
 			pagination,
 		},
 		initialState: {
@@ -72,15 +76,15 @@ export default function IntegratedDataTable<TData, TValue>({
 		},
 		manualPagination: true,
 		manualSorting: true,
+		manualFiltering: true,
 		onPaginationChange: setPagination,
 		onSortingChange: setSorting,
-		onGlobalFilterChange: setGlobalFilter,
+		onColumnFiltersChange: setColumnFilters,
+		// onGlobalFilterChange: setGlobalFilter,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 	})
-
-	console.log("sorting", sorting)
 
 	return (
 		<div>
@@ -94,9 +98,13 @@ export default function IntegratedDataTable<TData, TValue>({
 					<div className="flex items-center py-4">
 						<Input
 							type="text"
-							value={globalFilter ?? ""}
-							onChange={(e) => setGlobalFilter(e.target.value)}
-							placeholder="Search all columns..."
+							onChange={(e) =>
+								setColumnFilters((prev) => ({
+									...prev,
+									name: e.target.value,
+								}))
+							}
+							placeholder="Search character name..."
 							className={cn("max-w-sm", isFetching && "pointer-events-none opacity-50")}
 						/>
 					</div>

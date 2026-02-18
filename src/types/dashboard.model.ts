@@ -21,6 +21,7 @@ export interface IntegratedDataTablePayload {
 	limit?: number
 	offset?: number
 	page?: number
+	name?: string
 }
 
 export interface IntegratedDataTableModel<TData> {
