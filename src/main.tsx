@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
@@ -10,7 +11,6 @@ import { store } from "./store"
 import "froala-editor/css/froala_editor.pkgd.min.css"
 import "froala-editor/css/froala_style.min.css"
 
-
 const root = document.getElementById("root")!
 
 createRoot(root).render(
@@ -19,6 +19,7 @@ createRoot(root).render(
 			<TooltipProvider>
 				<App />
 			</TooltipProvider>
+			<Toaster />
 		</Provider>
 	</BrowserRouter>,
 )

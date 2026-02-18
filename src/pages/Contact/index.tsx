@@ -1,20 +1,19 @@
 import Button from "@/components/Button"
 import { useState } from "react"
 import FroalaEditor from "react-froala-wysiwyg"
-import FroalaEditorView from "react-froala-wysiwyg/FroalaEditorView"
+import { toast } from "sonner"
 
 export default function Contact() {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [message, setMessage] = useState<string>("")
 
-	const handleModelChange = (event) => {
-		setMessage(event)
-	}
-
 	const handleSend = () => {
-		console.log("send", message)
+		console.log("handleSend", message)
 		setIsLoading(true)
 		setTimeout(() => {
+			toast.success("Thank you for leave a message, however this is only a test contact form.", {
+				position: "bottom-center",
+			})
 			setIsLoading(false)
 		}, 3000)
 	}
@@ -24,26 +23,11 @@ export default function Contact() {
 			<h1 className="font-semibold p-3 text-xl w-full">Send me a message</h1>
 			<hr className="mt-2 mb-4" />
 			<div className="w-[50%] mb-4">
-				<FroalaEditor
-					tag="textarea"
-					onModelChange={handleModelChange}
-					config={{
-						placeholder: "Type here",
-						events: {
-							// focus: function (_e, editor) {
-							// 	console.log(editor.selection.get())
-							// },
-							// onchange: setMessage
-						},
-					}}
-				/>
+				<FroalaEditor tag="textarea" onModelChange={setMessage} />
 			</div>
-			<Button isLoading={isLoading} onClick={handleSend}>
+			<Button isLoading={isLoading} onClick={handleSend} disabled={!message}>
 				Send
 			</Button>
-			<div className="mt-5">
-				<FroalaEditorView model={message} />
-			</div>
 		</div>
 	)
 }
