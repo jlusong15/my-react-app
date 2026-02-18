@@ -16,7 +16,6 @@ export const dashboardApi = api.injectEndpoints({
 		getIntegratedDataTableList: builder.query<IntegratedDataTableModel<IntegratedDataTableDocsModel>, IntegratedDataTablePayload>({
 			query: (params: IntegratedDataTablePayload) => {
 				const p = cleanedObj(params) as Record<string, string>
-				console.log('p', p)
 				const queryString = params ? new URLSearchParams(p).toString() : '';
 				return `/character${queryString && '?'}${queryString}`
 			},

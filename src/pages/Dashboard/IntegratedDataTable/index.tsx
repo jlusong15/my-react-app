@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Spinner } from "@/components/ui/spinner"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
 import { IntegratedDataTableModel, IntegratedDataTablePayload } from "@/types/dashboard.model"
@@ -18,6 +19,7 @@ import {
 } from "@tanstack/react-table"
 
 import { useState } from "react"
+import { Info } from "lucide-react"
 
 type QueryResult<TData> = {
 	data?: IntegratedDataTableModel<TData>
@@ -107,6 +109,14 @@ export default function IntegratedDataTable<TData, TValue>({
 							placeholder="Search character name..."
 							className={cn("max-w-sm", isFetching && "pointer-events-none opacity-50")}
 						/>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<Info className="ml-2.5 text-gray-600 hover:text-gray-400 size-5" />
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>Search exact name (case-sensitive)</p>
+							</TooltipContent>
+						</Tooltip>
 					</div>
 
 					<div className="overflow-auto rounded-md border">

@@ -1,6 +1,6 @@
 import { NavModel } from "@/types/nav.model"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline"
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import { Cat } from "lucide-react"
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
