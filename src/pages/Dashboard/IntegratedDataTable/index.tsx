@@ -18,7 +18,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table"
 import { Info } from "lucide-react"
-import { useMemo, useState } from "react"
+import { ChangeEvent, useCallback, useMemo, useState } from "react"
 
 type QueryResult<TData> = {
 	data?: IntegratedDataTableModel<TData>
@@ -89,13 +89,17 @@ export default function IntegratedDataTable<TData, TValue>({
 	const debouncedSetFilter = useMemo(
 		() =>
 			debounce((columnId: string, value: string) => {
-				setColumnFilters((prev) => ({
-					...prev,
-					[columnId]: value,
-				}))
+				handleSetColumnFilter(columnId, value)
 			}, 500),
 		[],
 	)
+	const handleSetColumnFilter = (columnId: string, value: string) => {
+		console.log("handleSetColumnFilter", { columnId, value })
+		setColumnFilters((prev) => ({
+			...prev,
+			[columnId]: value,
+		}))
+	}
 
 	return (
 		<div>
