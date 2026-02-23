@@ -7,6 +7,7 @@ import MenuNav from "./components/MenuNav"
 import Browse from "./pages/Browse"
 import StepperForm from "./pages/Stepper"
 import Contact from "./pages/Contact"
+import Practice from "./pages/Practice"
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				<Route path="/browse" element={<Browse />} />
 				<Route path="/stepper" element={<StepperForm />} />
 				<Route path="/contact" element={<Contact />} />
+				<Route path="/practice" element={<Practice />} />
 			</Routes>
 		</>
 	)
