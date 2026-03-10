@@ -86,20 +86,13 @@ export default function IntegratedDataTable<TData, TValue>({
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 	})
-	const debouncedSetFilter = useMemo(
-		() =>
-			debounce((columnId: string, value: string) => {
-				handleSetColumnFilter(columnId, value)
-			}, 500),
-		[],
-	)
-	const handleSetColumnFilter = (columnId: string, value: string) => {
-		console.log("handleSetColumnFilter", { columnId, value })
+	const debouncedSetFilter = debounce((colId: string, value: string) => {
 		setColumnFilters((prev) => ({
 			...prev,
-			[columnId]: value,
+			[colId]: value,
 		}))
-	}
+	}, 500)
+	const inputFilterChangeEvent = useMemo(() => debouncedSetFilter, [])
 
 	return (
 		<div>
@@ -113,7 +106,7 @@ export default function IntegratedDataTable<TData, TValue>({
 					<div className="flex items-center py-4">
 						<Input
 							type="text"
-							onChange={(e) => debouncedSetFilter("name", e.target.value)}
+							onChange={(e) => inputFilterChangeEvent("name", e.target.value)}
 							placeholder="Search character name..."
 							className={cn("max-w-sm", isFetching && "pointer-events-none opacity-50")}
 						/>

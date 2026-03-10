@@ -8,7 +8,6 @@ export default function Contact() {
 	const [message, setMessage] = useState<string>("")
 
 	const handleSend = () => {
-		console.log("handleSend", message)
 		setIsLoading(true)
 		setTimeout(() => {
 			toast.success("Thank you for leave a message, however this is only a test contact form.", {
