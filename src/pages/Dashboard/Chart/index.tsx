@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useMemo, useState } from "react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { chartData } from "./data"
+import { SelectDropdown } from "@/components/SelectDropdown"
 
 export const description = "An interactive area chart"
 
@@ -28,6 +29,20 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function DashboardChart() {
+	const timeRangeList = [
+		{
+			value: "7d",
+			display: "Last 7 days",
+		},
+		{
+			value: "30d",
+			display: "Last 30 days",
+		},
+		{
+			value: "90d",
+			display: "Last 90 days",
+		},
+	]
 	const [timeRange, setTimeRange] = useState<String>("7d")
 	const filteredData = useMemo(
 		() =>
@@ -49,25 +64,15 @@ export function DashboardChart() {
 
 	return (
 		<>
-			<div className="mb-2">
-				<Select value={timeRange?.toString()} onValueChange={setTimeRange}>
-					<SelectTrigger className="hidden w-40 rounded-lg sm:ml-auto sm:flex" aria-label="Select a value">
-						<SelectValue placeholder="Last 3 months" />
-					</SelectTrigger>
-					<SelectContent className="rounded-xl">
-						<SelectItem value="7d" className="rounded-lg">
-							Last 7 days
-						</SelectItem>
-						<SelectItem value="30d" className="rounded-lg">
-							Last 30 days
-						</SelectItem>
-						<SelectItem value="90d" className="rounded-lg">
-							Last 3 months
-						</SelectItem>
-					</SelectContent>
-				</Select>
+			<div className="mb-2 w-[50%] float-right">
+				<SelectDropdown
+					value={timeRange?.toString()}
+					onValueChange={setTimeRange}
+					placeholder="Select"
+					items={timeRangeList}
+				/>
 			</div>
-			<ChartContainer config={chartConfig} className="aspect-auto h-62.5 w-full">
+			<ChartContainer config={chartConfig} className="aspect-auto h-56 w-full">
 				<AreaChart data={filteredData}>
 					<defs>
 						<linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
