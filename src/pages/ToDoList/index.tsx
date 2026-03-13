@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import ButtonLoader from "@/components/Button"
 import { Ban, LoaderCircle, Pencil, Save, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import PageLayout from "@/components/PageLayout"
 
 const ToDoList = ({ title }: { title: string }) => {
 	const [isLoading, setLoading] = useState<boolean>(false)
@@ -89,103 +90,103 @@ const ToDoList = ({ title }: { title: string }) => {
 	}, [])
 
 	return (
-		<div id="to-do-list" className="w-full px-5 mt-3">
-			<h1 className="font-semibold p-3 text-xl w-full">{title}</h1>
-			<hr className="mt-2" />
-
-			<ul className="w-full mt-2">
-				{list.map((ticket) => {
-					return (
-						<li
-							key={ticket?.id}
-							className={cn("flex flex-row justify-between items-center hover:bg-gray-50 rounded p-1", {
-								"bg-gray-50": isEdit && form?.id === ticket.id,
-							})}
-						>
-							<div>
-								{isEdit && form?.id === ticket.id ? (
-									<Input
-										onChange={handleDescriptionChange}
-										value={form?.description ?? ""}
-										disabled={isLoading}
-										className="bg-white w-sm"
-									></Input>
+		<PageLayout type="SIDEBAR" pageTitle="To Do List">
+			<div className="w-full px-5 mt-3">
+				<ul className="w-full mt-2">
+					{list.map((ticket) => {
+						return (
+							<li
+								key={ticket?.id}
+								className={cn("flex flex-row justify-between items-center hover:bg-gray-50 rounded p-1", {
+									"bg-gray-50": isEdit && form?.id === ticket.id,
+								})}
+							>
+								<div>
+									{isEdit && form?.id === ticket.id ? (
+										<Input
+											onChange={handleDescriptionChange}
+											value={form?.description ?? ""}
+											disabled={isLoading}
+											className="bg-white w-sm"
+										></Input>
+									) : (
+										<span className="px-3 py-2 inline-block">{ticket?.description}</span>
+									)}
+								</div>
+								{isLoading && isEdit && form?.id === ticket.id ? (
+									<LoaderCircle className="animate-spin" />
+								) : isEdit && form?.id === ticket.id ? (
+									<div>
+										<Button
+											onClick={saveItem}
+											size="icon-sm"
+											variant="ghost"
+											className="p-0"
+											disabled={showForm || isLoading}
+										>
+											<Save />
+										</Button>
+										<Button onClick={cancelEdit} size="icon-sm" variant="ghost" disabled={showForm || isLoading}>
+											<Ban />
+										</Button>
+									</div>
 								) : (
-									<span className="px-3 py-2 inline-block">{ticket?.description}</span>
+									<div>
+										<Button
+											onClick={(e) => editItem(ticket?.id)}
+											size="icon-sm"
+											variant="ghost"
+											disabled={showForm || isEdit}
+										>
+											<Pencil />
+										</Button>
+										<Button
+											onClick={(e) => removeItem(ticket?.id)}
+											size="icon-sm"
+											variant="ghost"
+											className="p-0"
+											disabled={showForm || isEdit}
+										>
+											<X />
+										</Button>
+									</div>
 								)}
-							</div>
-							{isLoading && isEdit && form?.id === ticket.id ? (
-								<LoaderCircle className="animate-spin" />
-							) : isEdit && form?.id === ticket.id ? (
-								<div>
-									<Button
-										onClick={saveItem}
-										size="icon-sm"
-										variant="ghost"
-										className="p-0"
-										disabled={showForm || isLoading}
-									>
-										<Save />
-									</Button>
-									<Button onClick={cancelEdit} size="icon-sm" variant="ghost" disabled={showForm || isLoading}>
-										<Ban />
-									</Button>
-								</div>
-							) : (
-								<div>
-									<Button
-										onClick={(e) => editItem(ticket?.id)}
-										size="icon-sm"
-										variant="ghost"
-										disabled={showForm || isEdit}
-									>
-										<Pencil />
-									</Button>
-									<Button
-										onClick={(e) => removeItem(ticket?.id)}
-										size="icon-sm"
-										variant="ghost"
-										className="p-0"
-										disabled={showForm || isEdit}
-									>
-										<X />
-									</Button>
-								</div>
-							)}
-						</li>
-					)
-				})}
-			</ul>
+							</li>
+						)
+					})}
+				</ul>
 
-			{showForm && (
-				<div id="to-do-form" className="w-full flex flex-col p-3 rounded border gap-3 mt-3">
-					<span>
-						Description:
-						<Input onChange={handleDescriptionChange} value={form?.description ?? ""} disabled={isLoading}></Input>
-					</span>
-					<div className="flex flex-row gap-1 my-1">
-						<ButtonLoader onClick={saveItem} className="w-1/2" isLoading={isLoading}>
-							{isAdd ? "Add" : "Save"}
-						</ButtonLoader>
-						<Button onClick={() => toggleShowForm(false)} className="w-1/2" variant="outline" disabled={isLoading}>
-							Cancel
+				{showForm && (
+					<div className="w-full flex flex-col p-3 rounded border gap-3 mt-3">
+						<span>
+							Description:
+							<Input onChange={handleDescriptionChange} value={form?.description ?? ""} disabled={isLoading}></Input>
+						</span>
+						<div className="flex flex-row gap-1 my-1">
+							<ButtonLoader onClick={saveItem} className="w-1/2" isLoading={isLoading}>
+								{isAdd ? "Add" : "Save"}
+							</ButtonLoader>
+							<Button onClick={() => toggleShowForm(false)} className="w-1/2" variant="outline" disabled={isLoading}>
+								Cancel
+							</Button>
+						</div>
+					</div>
+				)}
+
+				{!showForm && !isEdit && (
+					<div className="flex justify-end mt-2 mb-3">
+						<Button
+							onClick={() => {
+								toggleShowForm(true)
+								setIsAdd(true)
+							}}
+						>
+							Add Item
 						</Button>
 					</div>
-				</div>
-			)}
-
-			{!showForm && !isEdit && (
-				<Button
-					onClick={() => {
-						toggleShowForm(true)
-						setIsAdd(true)
-					}}
-					className="mt-2 float-right"
-				>
-					Add Item
-				</Button>
-			)}
-		</div>
+				)}
+			</div>
+		</PageLayout>
 	)
 }
 

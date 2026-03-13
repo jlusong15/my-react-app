@@ -1,4 +1,5 @@
 import Button from "@/components/Button"
+import PageLayout from "@/components/PageLayout"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
@@ -54,42 +55,44 @@ export default function StepperForm() {
 	}
 
 	return (
-		<div id="stepper-form" className="w-full px-5 mt-3">
-			<div className="max-w-2xl mt-5 m-auto">
-				<Card className="pt-0 border border-gray-6 rounded-xl overflow-hidden">
-					<div className="flex justify-between bg-gray-50 border-b border-gray-6 p-5">
-						{FormSteps?.map((step) => (
-							<div
-								className={cn(
-									"rounded-full bg-gray-200 p-2.5 transition",
-									"[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-500",
-									{
-										"bg-primary [&>svg]:text-white": currentStep === step.id,
-									},
-								)}
-								key={step.id}
-							>
-								{iconMapper?.[`${step.icon}`]}
-							</div>
-						))}
-					</div>
-					<CardContent>{stepMapper?.[currentStep]}</CardContent>
-					<CardFooter>
-						<div className="flex justify-between w-full">
-							{currentStep > 0 && currentStep < 3 && (
-								<Button variant="outline" onClick={handleBack}>
-									Back
-								</Button>
-							)}
-							{currentStep < 3 && (
-								<Button className="ml-auto" onClick={handleNext} disabled={disableNext()}>
-									Next
-								</Button>
-							)}
+		<PageLayout type="SIDEBAR" pageTitle="Stepper">
+			<div className="w-full px-5 mt-3">
+				<div className="">
+					<Card className="pt-0 border-0 overflow-hidden shadow-none rounded-0">
+						<div className="flex justify-between bg-gray-50 border-b  rounded-0 border-gray-6 p-5">
+							{FormSteps?.map((step) => (
+								<div
+									className={cn(
+										"rounded-full bg-gray-200 p-2.5 transition",
+										"[&>svg]:w-5 [&>svg]:h-5 [&>svg]:text-gray-500",
+										{
+											"bg-primary [&>svg]:text-white": currentStep === step.id,
+										},
+									)}
+									key={step.id}
+								>
+									{iconMapper?.[`${step.icon}`]}
+								</div>
+							))}
 						</div>
-					</CardFooter>
-				</Card>
+						<CardContent>{stepMapper?.[currentStep]}</CardContent>
+						<CardFooter>
+							<div className="flex justify-between w-full">
+								{currentStep > 0 && currentStep < 3 && (
+									<Button variant="outline" onClick={handleBack}>
+										Back
+									</Button>
+								)}
+								{currentStep < 3 && (
+									<Button className="ml-auto" onClick={handleNext} disabled={disableNext()}>
+										Next
+									</Button>
+								)}
+							</div>
+						</CardFooter>
+					</Card>
+				</div>
 			</div>
-		</div>
+		</PageLayout>
 	)
 }

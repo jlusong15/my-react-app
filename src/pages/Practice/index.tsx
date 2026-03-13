@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import Child from "./child"
+import PageLayout from "@/components/PageLayout"
 
 export default function Practice() {
 	const [testData, setTestData] = useState<string>("123")
@@ -65,30 +66,32 @@ export default function Practice() {
 	console.log("obj1", obj1)
 
 	return (
-		<div id="practice" className="w-full px-5 mt-3">
-			<h1 className="font-semibold p-3 text-xl w-full">Practice</h1>
-			<hr className="mt-2 mb-4" />
-			<div className="w-full mb-4 border-bottom ">
-				<input ref={inputRef} type="text" className="border rounded p-2 text-md mr-1" placeholder="type here..." />
-				<Button onClick={handleTrigger1} className="ml-1">
-					Trigger Ref
-				</Button>
-				<Button onClick={handleTrigger2} className="ml-1">
-					Trigger UseState
-				</Button>
-				<Button onClick={handleDestroy} className="ml-1">
-					Destroy input
-				</Button>
+		<PageLayout>
+			<div className="w-full px-5 mt-3">
+				<h1 className="font-semibold p-3 text-xl w-full">Practice</h1>
+				<hr className="mt-2 mb-4" />
+				<div className="w-full mb-4 border-bottom ">
+					<input ref={inputRef} type="text" className="border rounded p-2 text-md mr-1" placeholder="type here..." />
+					<Button onClick={handleTrigger1} className="ml-1">
+						Trigger Ref
+					</Button>
+					<Button onClick={handleTrigger2} className="ml-1">
+						Trigger UseState
+					</Button>
+					<Button onClick={handleDestroy} className="ml-1">
+						Destroy input
+					</Button>
+				</div>
+				<div className="w-full">
+					<Button onClick={() => setCount(count + 1)} className="mr-2">
+						Count: {count}
+					</Button>
+					<Child
+						data={testData}
+						// onClick={handleClick}
+					/>
+				</div>
 			</div>
-			<div className="w-full">
-				<Button onClick={() => setCount(count + 1)} className="mr-2">
-					Count: {count}
-				</Button>
-				<Child
-					data={testData}
-					// onClick={handleClick}
-				/>
-			</div>
-		</div>
+		</PageLayout>
 	)
 }

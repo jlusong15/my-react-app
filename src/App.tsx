@@ -13,7 +13,6 @@ import TasksPage from "./pages/Tasks"
 function App() {
 	return (
 		<>
-			<MenuNav navigation={NavLinks} />
 			<Routes>
 				<Route path="/" element={<Dashboard />} />
 				<Route path="/tasks" element={<TasksPage />} />

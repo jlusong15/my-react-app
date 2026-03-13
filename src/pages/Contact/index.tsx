@@ -1,9 +1,17 @@
 import Button from "@/components/Button"
+import PageLayout from "@/components/PageLayout"
 import { useState } from "react"
 import FroalaEditor from "react-froala-wysiwyg"
 import { toast } from "sonner"
 
 export default function Contact() {
+	const froalaConfig = {
+		height: 300,
+		// minHeight: 200, // optional
+		// maxHeight: 500, // optional
+		// toolbarButtons: ['bold', 'italic', 'underline'],
+		inlineMode: false, // important
+	}
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [message, setMessage] = useState<string>("")
 
@@ -18,15 +26,17 @@ export default function Contact() {
 	}
 
 	return (
-		<div id="browse" className="w-full px-5 mt-3">
-			<h1 className="font-semibold p-3 text-xl w-full">Send me a message</h1>
-			<hr className="mt-2 mb-4" />
-			<div className="w-[50%] mb-4">
-				<FroalaEditor tag="textarea" onModelChange={setMessage} />
+		<PageLayout type="SIDEBAR" pageTitle="Send me a message">
+			<div id="browse" className="w-full px-5 mt-3">
+				<div className="w-full mb-4">
+					<FroalaEditor tag="textarea" onModelChange={setMessage} config={froalaConfig} />
+				</div>
+				<div className="flex justify-end">
+					<Button isLoading={isLoading} onClick={handleSend} disabled={!message}>
+						Send
+					</Button>
+				</div>
 			</div>
-			<Button isLoading={isLoading} onClick={handleSend} disabled={!message}>
-				Send
-			</Button>
-		</div>
+		</PageLayout>
 	)
 }
