@@ -10,8 +10,8 @@ export const NavLinks: NavModel[] = [
 		name: "Dashboard",
 	},
 	{
-		href: "/to-do-list",
-		name: "To Do List",
+		href: "/tasks",
+		name: "My Tasks",
 	},
 	{
 		href: "/browse",
@@ -20,6 +20,10 @@ export const NavLinks: NavModel[] = [
 	{
 		href: "/stepper",
 		name: "Stepper",
+	},
+	{
+		href: "/to-do-list",
+		name: "To Do",
 	},
 	{
 		href: "/contact",

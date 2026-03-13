@@ -9,7 +9,7 @@ function classNames(...classes: (string | undefined | null | false)[]): string {
 
 export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 	return (
-		<Disclosure as="nav" className="relative bg-primary">
+		<Disclosure as="nav" className="sticky top-0 bg-primary z-50">
 			<div className="px-2">
 				<div className="relative flex h-16 items-center justify-between">
 					<div className="absolute inset-y-0 left-0 flex items-center sm:hidden">

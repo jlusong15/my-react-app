@@ -8,6 +8,7 @@ import Browse from "./pages/Browse"
 import StepperForm from "./pages/Stepper"
 import Contact from "./pages/Contact"
 import Practice from "./pages/Practice"
+import TasksPage from "./pages/Tasks"
 
 function App() {
 	return (
@@ -15,6 +16,7 @@ function App() {
 			<MenuNav navigation={NavLinks} />
 			<Routes>
 				<Route path="/" element={<Dashboard />} />
+				<Route path="/tasks" element={<TasksPage />} />
 				<Route path="/to-do-list" element={<ToDoList title="To Do List" />} />
 				<Route path="/browse" element={<Browse />} />
 				<Route path="/stepper" element={<StepperForm />} />
