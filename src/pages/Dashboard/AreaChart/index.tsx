@@ -42,7 +42,7 @@ export function ChartAreaBasic() {
 				<ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
 				<Area
 					dataKey="desktop"
-					type="natural"
+					type="linear"
 					fill="var(--color-desktop)"
 					fillOpacity={0.4}
 					stroke="var(--color-desktop)"
