@@ -1,0 +1,22 @@
+export const randomQuotesList = [
+	{ "id": 1, "quote": "The only way to do great work is to love what you do.", "author": "Steve Jobs" },
+	{ "id": 2, "quote": "Success is not final, failure is not fatal: it is the courage to continue that counts.", "author": "Winston Churchill" },
+	{ "id": 3, "quote": "In the middle of every difficulty lies opportunity.", "author": "Albert Einstein" },
+	{ "id": 4, "quote": "Do what you can, with what you have, where you are.", "author": "Theodore Roosevelt" },
+	{ "id": 5, "quote": "Happiness depends upon ourselves.", "author": "Aristotle" },
+	{ "id": 6, "quote": "It always seems impossible until it's done.", "author": "Nelson Mandela" },
+	{ "id": 7, "quote": "Dream big and dare to fail.", "author": "Norman Vaughan" },
+	{ "id": 8, "quote": "What we think, we become.", "author": "Buddha" },
+	{ "id": 9, "quote": "Turn your wounds into wisdom.", "author": "Oprah Winfrey" },
+	{ "id": 10, "quote": "The journey of a thousand miles begins with one step.", "author": "Lao Tzu" },
+	{ "id": 11, "quote": "Believe you can and you're halfway there.", "author": "Theodore Roosevelt" },
+	{ "id": 12, "quote": "Act as if what you do makes a difference. It does.", "author": "William James" },
+	{ "id": 13, "quote": "Quality means doing it right when no one is looking.", "author": "Henry Ford" },
+	{ "id": 14, "quote": "Stay hungry, stay foolish.", "author": "Steve Jobs" },
+	{ "id": 15, "quote": "If you can dream it, you can do it.", "author": "Walt Disney" },
+	{ "id": 16, "quote": "Everything you can imagine is real.", "author": "Pablo Picasso" },
+	{ "id": 17, "quote": "Simplicity is the ultimate sophistication.", "author": "Leonardo da Vinci" },
+	{ "id": 18, "quote": "Well done is better than well said.", "author": "Benjamin Franklin" },
+	{ "id": 19, "quote": "Opportunities don't happen. You create them.", "author": "Chris Grosser" },
+	{ "id": 20, "quote": "Do one thing every day that scares you.", "author": "Eleanor Roosevelt" }
+]

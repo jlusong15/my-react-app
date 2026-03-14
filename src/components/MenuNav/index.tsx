@@ -63,13 +63,13 @@ export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 									</Link>
 								</MenuItem>
 								<MenuItem>
-									<Link
-										to="https://buymeacoffee.com/"
+									<a
+										href="https://buymeacoffee.com/jhennalilu"
 										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
 										target="_blank"
 									>
 										Buy me coffee?
-									</Link>
+									</a>
 								</MenuItem>
 							</MenuItems>
 						</Menu>

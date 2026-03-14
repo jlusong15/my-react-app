@@ -1,0 +1,22 @@
+export const randomTriviaList = [
+	{ "id": 1, "fact": "Octopuses have three hearts, and when they swim, two of the hearts actually stop beating, which helps them conserve energy while propelling through water." },
+	{ "id": 2, "fact": "Bananas are botanically classified as berries, while strawberries are not, even though strawberries have 'berry' in their name." },
+	{ "id": 3, "fact": "Honey has natural preservatives and has been found in ancient Egyptian tombs still perfectly edible after thousands of years." },
+	{ "id": 4, "fact": "Sharks have been around for over 400 million years, meaning they existed even before trees appeared on Earth." },
+	{ "id": 5, "fact": "A day on Venus, which is the time it takes for the planet to rotate once on its axis, is actually longer than a Venusian year, the time it takes to orbit the Sun." },
+	{ "id": 6, "fact": "Wombats produce cube-shaped feces, which they use to mark territory without it rolling away, a unique adaptation in the animal kingdom." },
+	{ "id": 7, "fact": "The Eiffel Tower expands in height by up to 15 centimeters during hot summer days due to the expansion of iron in the heat." },
+	{ "id": 8, "fact": "There are more stars in the observable universe than grains of sand on all the beaches of Earth combined, making the cosmos unimaginably vast." },
+	{ "id": 9, "fact": "A group of flamingos is called a 'flamboyance', which perfectly matches their bright pink color and elegant, social behavior." },
+	{ "id": 10, "fact": "Some species of turtles are capable of breathing through their butts, allowing them to survive underwater for extended periods." },
+	{ "id": 11, "fact": "The human brain accounts for about 20% of the body's total energy usage, despite only making up roughly 2% of body weight." },
+	{ "id": 12, "fact": "Under very specific conditions, water can boil and freeze at the same time, a phenomenon known as the 'triple point'." },
+	{ "id": 13, "fact": "There are more possible legal positions in chess than there are atoms in the observable universe, demonstrating the game's incredible complexity." },
+	{ "id": 14, "fact": "The shortest war in recorded history was between Britain and Zanzibar in 1896, lasting only 38 to 45 minutes before Zanzibar surrendered." },
+	{ "id": 15, "fact": "Cows form strong social bonds with their peers and can become stressed if separated from their best friends, showing emotional depth in these animals." },
+	{ "id": 16, "fact": "The first computer bug ever recorded was an actual moth stuck in a relay of the Harvard Mark II computer in 1947, which led to the term 'debugging'." },
+	{ "id": 17, "fact": "Sloths are capable of holding their breath for up to 40 minutes, longer than dolphins, which helps them survive in underwater environments." },
+	{ "id": 18, "fact": "The Moon experiences moonquakes similar to earthquakes, caused by tidal forces from Earth, and some can be strong enough to rattle equipment." },
+	{ "id": 19, "fact": "Try humming while pinching your nose closed—it is impossible because airflow through your nasal cavity is required to produce the hum." },
+	{ "id": 20, "fact": "Under certain conditions, hot water can freeze faster than cold water, a counterintuitive effect known as the Mpemba effect, which scientists still study today." }
+]
