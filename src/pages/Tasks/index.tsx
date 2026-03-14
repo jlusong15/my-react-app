@@ -70,6 +70,7 @@ export default function TasksPage() {
 
 				<div className="pt-5 grid gap-y-5">
 					<CollapsibleSection
+						defaultOpen={true}
 						triggerHeader={
 							<span className="flex items-center text-sm">
 								<CircleCheck className="mr-2.5 text-primary" /> Step1
@@ -96,12 +97,12 @@ export default function TasksPage() {
 						</div>
 					</CollapsibleSection>
 
-					<CollapsibleSection triggerHeader={<span className="items-center text-sm">Step2</span>}>
+					<CollapsibleSection defaultOpen={true} triggerHeader={<span className="items-center text-sm">Step2</span>}>
 						<div className="px-10 mb-2.5 ml-3 border-l border-l-neutral-200">
 							<div className="flex mx-5 pt-5 mb-5 gap-5 pr-5">
 								<div className="flex flex-col w-[50%]">
 									<span className="mb-1 text-xs">Short Description</span>
-									<Input />
+									<Input className="bg-white"/>
 								</div>
 							</div>
 							<div className="flex mx-5 w-full">
