@@ -2,6 +2,7 @@ import { NavModel } from "@/types/nav.model"
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
 import { Cat } from "lucide-react"
+import { Link } from "react-router-dom"
 
 function classNames(...classes: (string | undefined | null | false)[]): string {
 	return classes?.filter(Boolean)?.join(" ")
@@ -25,9 +26,9 @@ export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 						<div className="hidden sm:block">
 							<div className="flex space-x-4">
 								{navigation.map((item) => (
-									<a
+									<Link
 										key={item.name}
-										href={item.href}
+										to={item.href}
 										aria-current={item.current ? "page" : undefined}
 										className={classNames(
 											item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-white/5 hover:text-white",
@@ -35,7 +36,7 @@ export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 										)}
 									>
 										{item.name}
-									</a>
+									</Link>
 								))}
 							</div>
 						</div>
@@ -54,21 +55,21 @@ export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 								className="absolute right-0 z-10 mt-3 w-48 origin-top-right rounded-bl-md rounded-br-md bg-white py-1 shadow-lg outline outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
 							>
 								<MenuItem>
-									<a
-										href="#"
+									<Link
+										to="#"
 										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
 									>
 										My Profile
-									</a>
+									</Link>
 								</MenuItem>
 								<MenuItem>
-									<a
-										href="https://buymeacoffee.com/"
+									<Link
+										to="https://buymeacoffee.com/"
 										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
 										target="_blank"
 									>
 										Buy me coffee?
-									</a>
+									</Link>
 								</MenuItem>
 							</MenuItems>
 						</Menu>

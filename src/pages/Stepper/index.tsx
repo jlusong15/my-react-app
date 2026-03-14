@@ -57,9 +57,9 @@ export default function StepperForm() {
 	return (
 		<PageLayout type="SIDEBAR" pageTitle="Stepper">
 			<div className="w-full px-5 mt-3">
-				<div className="">
+				<div>
 					<Card className="pt-0 border-0 overflow-hidden shadow-none rounded-0">
-						<div className="flex justify-between bg-gray-50 border-b  rounded-0 border-gray-6 p-5">
+						<div className="flex justify-between bg-gray-50 border-b rounded-0 border-gray-6 p-5">
 							{FormSteps?.map((step) => (
 								<div
 									className={cn(
