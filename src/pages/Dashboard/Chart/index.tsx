@@ -72,7 +72,7 @@ export function DashboardChart() {
 					items={timeRangeList}
 				/>
 			</div>
-			<ChartContainer config={chartConfig} className="aspect-auto h-56 w-full">
+			<ChartContainer config={chartConfig} className="aspect-auto h-74 w-full">
 				<AreaChart data={filteredData}>
 					<defs>
 						<linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">

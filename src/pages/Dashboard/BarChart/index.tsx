@@ -25,7 +25,7 @@ const chartConfig = {
 
 export function BarChartBasic() {
 	return (
-		<ChartContainer config={chartConfig}>
+		<ChartContainer config={chartConfig} className="mt-5 aspect-auto h-80 w-full">
 			<BarChart accessibilityLayer data={chartData}>
 				<CartesianGrid vertical={false} />
 				<XAxis

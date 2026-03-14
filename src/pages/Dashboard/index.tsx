@@ -60,7 +60,7 @@ export default function Dashboard() {
 						</div>
 					</div>
 
-					<div className="grid-stack-item" gs-w="5" gs-h="3.5">
+					<div className="grid-stack-item" gs-w="5" gs-h="4">
 						<div className="grid-stack-item-content rounded-md border m-3 p-3 bg-white">
 							<h4>Milestone</h4>
 							<BarChartBasic />
