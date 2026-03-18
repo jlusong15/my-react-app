@@ -8,7 +8,7 @@ Demo deployed on https://my-react-app-rosy-two.vercel.app/
 * Responsive design (e.g., Tailwind CSS)
 
 ## Tech Stack
-* Frontend: React + TypeScript, Vite
+* Frontend: React Vite + TypeScript
 * Styling: Tailwind CSS & Shadcn
 * State Management: RTK Query
 
