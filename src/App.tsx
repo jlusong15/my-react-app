@@ -1,14 +1,12 @@
-import { Routes, Route } from "react-router"
+import { Route, Routes } from "react-router"
 import "./App.css"
-import { NavLinks } from "./types/nav.model"
-import Dashboard from "./pages/Dashboard"
-import ToDoList from "./pages/ToDoList"
-import MenuNav from "./components/MenuNav"
 import Browse from "./pages/Browse"
-import StepperForm from "./pages/Stepper"
 import Contact from "./pages/Contact"
+import Dashboard from "./pages/Dashboard"
 import Practice from "./pages/Practice"
+import StepperForm from "./pages/Stepper"
 import TasksPage from "./pages/Tasks"
+import ToDoList from "./pages/ToDoList"
 
 function App() {
 	return (
