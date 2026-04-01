@@ -15,7 +15,7 @@ export const NavLinks: NavModel[] = [
 	},
 	{
 		href: "/tasks",
-		name: "My Tasks",
+		name: "Tasks",
 	},
 	{
 		href: "/browse",
@@ -31,6 +31,6 @@ export const NavLinks: NavModel[] = [
 	},
 	{
 		href: "/contact",
-		name: "Contact Me",
+		name: "Contact",
 	},
 ]
