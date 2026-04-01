@@ -78,35 +78,37 @@ export default function TasksPage() {
 						}
 					>
 						<div className="px-10 mb-2.5 ml-3 border-l border-l-neutral-200">
-							<div className="flex mx-5 pt-5 mb-5 gap-5">
-								<div className="flex flex-col w-[50%]">
+							<div className="flex flex-col md:flex-row mx-5 pt-5 mb-5 gap-5">
+								<div className="flex flex-col w-full md:w-1/2">
 									<span className="mb-1 text-xs">Task Name</span>
 									<SelectDropdown className="w-full" items={taskNameList} />
 								</div>
-								<div className="flex flex-col w-[50%]">
+								<div className="flex flex-col w-full md:w-1/2">
 									<span className="mb-1 text-xs">Schedule</span>
 									<DatePicker />
 								</div>
 							</div>
-							<div className="flex mx-5 gap-5">
-								<div className="flex flex-col w-[50%] pb-5 pr-5">
+
+							<div className="flex flex-col md:flex-row mx-5 gap-5 pb-5">
+								<div className="flex flex-col w-full md:w-1/2">
 									<span className="mb-1 text-xs">Group</span>
 									<SelectDropdown className="w-full" items={groupList} />
 								</div>
+								<div className="flex flex-col w-full md:w-1/2"></div>
 							</div>
 						</div>
 					</CollapsibleSection>
 
 					<CollapsibleSection defaultOpen={true} triggerHeader={<span className="items-center text-sm">Step2</span>}>
 						<div className="px-10 mb-2.5 ml-3 border-l border-l-neutral-200">
-							<div className="flex mx-5 pt-5 mb-5 gap-5 pr-5">
-								<div className="flex flex-col w-[50%]">
+							<div className="flex flex-col md:flex-row mx-5 gap-5">
+								<div className="flex flex-col w-full md:w-1/2 pb-5 pr-md-0">
 									<span className="mb-1 text-xs">Short Description</span>
-									<Input className="bg-white"/>
+									<Input className="w-full md:w-auto bg-white" />
 								</div>
 							</div>
-							<div className="flex mx-5 w-full">
-								<div className="flex flex-col w-full pb-5">
+							<div className="flex flex-col md:flex-row mx-5 gap-5">
+								<div className="flex flex-col w-full md:w-1/2 pb-5 pr-md-0">
 									<span className="mb-1 text-xs">Other Notes</span>
 									<Textarea />
 								</div>

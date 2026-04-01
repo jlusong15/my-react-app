@@ -6,8 +6,8 @@ import { PopoverBasic } from "../Popover"
 
 export default function DefaultSidebar() {
 	return (
-		<>
-			<Button>
+		<div className="px-2 md:pt-13">
+			<Button className="w-full">
 				<CirclePlus className="mr-1" />
 				Add Task
 			</Button>
@@ -98,6 +98,6 @@ export default function DefaultSidebar() {
 					</div>
 				</div>
 			</CollapsibleSection>
-		</>
+		</div>
 	)
 }

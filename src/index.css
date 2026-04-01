@@ -82,7 +82,7 @@
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.145 0 0);
 	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: rgb(48, 103, 53);
+	--secondary-foreground: oklch(42.457% 0.06737 210.778);
 	--muted: oklch(0.97 0 0);
 	--muted-foreground: oklch(0.556 0 0);
 	--accent: oklch(0.97 0 0);
@@ -171,5 +171,20 @@
 
 	h6 {
 		@apply text-base font-medium;
+	}
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }

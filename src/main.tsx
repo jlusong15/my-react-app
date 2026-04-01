@@ -10,11 +10,13 @@ import { store } from "./store"
 // Require Editor CSS files.
 import "froala-editor/css/froala_editor.pkgd.min.css"
 import "froala-editor/css/froala_style.min.css"
+import ScrollToTop from "./components/ScrollToTop"
 
 const root = document.getElementById("root")!
 
 createRoot(root).render(
 	<BrowserRouter>
+		<ScrollToTop />
 		<Provider store={store}>
 			<TooltipProvider>
 				<App />

@@ -21,7 +21,7 @@ export function SelectDropdown({ className, items, placeholder, value, onValueCh
 	return (
 		<>
 			<Select value={value?.toString() ?? ""} onValueChange={onValueChange}>
-				<SelectTrigger className="hidden w-full rounded-sm sm:ml-auto sm:flex" aria-label="Select a value">
+				<SelectTrigger className="w-full rounded-sm sm:ml-auto sm:flex" aria-label="Select a value">
 					<SelectValue placeholder={placeholder ?? "Select"} />
 				</SelectTrigger>
 				<SelectContent className="rounded-sm">
