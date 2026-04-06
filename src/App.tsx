@@ -1,13 +1,15 @@
+import { lazy } from "react"
 import { Route, Routes } from "react-router"
 import "./App.css"
-import Browse from "./pages/Browse"
-import Contact from "./pages/Contact"
-import Dashboard from "./pages/Dashboard"
-import Practice from "./pages/Practice"
-import StepperForm from "./pages/Stepper"
-import TasksPage from "./pages/Tasks"
-import ToDoList from "./pages/ToDoList"
-import Home from "./pages/Home"
+
+const Home = lazy(() => import("./pages/Home"))
+const Dashboard = lazy(() => import("./pages/Dashboard"))
+const TasksPage = lazy(() => import("./pages/Tasks"))
+const ToDoList = lazy(() => import("./pages/ToDoList"))
+const Browse = lazy(() => import("./pages/Browse"))
+const StepperForm = lazy(() => import("./pages/Stepper"))
+const Contact = lazy(() => import("./pages/Contact"))
+const Practice = lazy(() => import("./pages/Practice"))
 
 function App() {
 	return (
