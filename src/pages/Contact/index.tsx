@@ -18,7 +18,7 @@ export default function Contact() {
 	const handleSend = () => {
 		setIsLoading(true)
 		setTimeout(() => {
-			toast.success("Thank you for leave a message, however this is only a test contact form.", {
+			toast.success("Thank you for leaving a message, however this is only a test contact form.", {
 				position: "bottom-center",
 			})
 			setIsLoading(false)
