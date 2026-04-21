@@ -31,8 +31,8 @@ export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 										to={item.href}
 										className={({ isActive }) =>
 											classNames(
-												"rounded-md px-3 py-2 text-sm font-medium",
-												isActive ? "bg-black/40 text-white" : "text-gray-300 hover:bg-white/5 hover:text-white",
+												"rounded-md px-3 py-2 text-sm font-medium text-white",
+												isActive ? "bg-black/40" : "hover:bg-white/20 hover:text-white",
 											)
 										}
 									>
@@ -45,10 +45,10 @@ export default function MenuNav({ navigation }: { navigation: NavModel[] }) {
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 						{/* Profile dropdown */}
 						<Menu as="div" className="relative pr-3">
-							<MenuButton className="group/profile relative flex rounded-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 border border-gray-300 p-2 hover:bg-white/5">
+							<MenuButton className="group/profile relative flex rounded-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 border border-white p-2 hover:bg-white/5">
 								<span className="absolute -inset-1.5" />
 								<span className="sr-only">Open user menu</span>
-								<Cat className="text-gray-300 group-hover/profile:text-white" />
+								<Cat className="text-white group-hover/profile:text-white" />
 							</MenuButton>
 
 							<MenuItems
