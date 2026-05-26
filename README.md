@@ -1,5 +1,5 @@
 # React/Vite (TypeScript)
-A simple React application demonstrating the usage of Vite, TypeScript, TailwindCSS and RTK Query.
+A simple React application demonstrating the usage of the technologies listed below.
 
 Demo deployed on https://my-react-app-rosy-two.vercel.app/
 
