@@ -11,6 +11,7 @@ Demo deployed on https://my-react-app-rosy-two.vercel.app/
 - 🧾 **React Hook Form** for efficient and scalable form management
 - 🪟 **GridStack.js** for draggable and resizable dashboard layouts
 - 📊 **Recharts** for building responsive and customizable data visualizations
+- ✍️ **Froala Editor** for rich text editing and content authoring
 - 📋 **TanStack Table** for powerful and flexible data table management
 - 🧪 **React Testing Library** for component testing focused on user behavior
 - ⚡ **Vitest** for fast and lightweight unit testing in Vite projects
