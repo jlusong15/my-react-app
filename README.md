@@ -40,7 +40,6 @@ my-react-app/
 ### Run React Project
 
 ```bash
-cd frontend
 npm run dev
 ```
 
