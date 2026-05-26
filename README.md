@@ -3,52 +3,21 @@ A simple React application demonstrating the usage of Vite, TypeScript, Tailwind
 
 Demo deployed on https://my-react-app-rosy-two.vercel.app/
 
-## Features
-* Strongly typed components with TypeScript
-* Responsive design (e.g., Tailwind CSS)
+# 🚀 Tech Stack
+- ⚡ **Vite** for fast and optimized frontend development
+- 🎨 **Tailwind CSS** for modern and responsive UI styling
+- 🧩 **shadcn/ui** for accessible and reusable UI components
+- ✅ **Zod** for schema validation and type-safe data handling
+- 🧾 **React Hook Form** for efficient and scalable form management
+- 🪟 **GridStack.js** for draggable and resizable dashboard layouts
+- 📊 **Recharts** for building responsive and customizable data visualizations
+- 📋 **TanStack Table** for powerful and flexible data table management
+- 🧪 **React Testing Library** for component testing focused on user behavior
+- ⚡ **Vitest** for fast and lightweight unit testing in Vite projects
 
-## Tech Stack
-* Frontend: React Vite + TypeScript
-* Styling: Tailwind CSS & Shadcn
-* State Management: RTK Query
+---
 
-Other Tools: ESLint, Prettier, Husky (TBD)
-
-## Installation
-Make sure you have Node.js installed (v18+ recommended).
-
-# Clone the repository
-git clone https://github.com/jlusong15/my-react-app.git
-
-# Navigate to project folder
-cd my-react-app
-
-# Install dependencies
-```yarn install```
-
-# Start development server
-```yarn run dev```
-
-# Build for production
-```yarn run build```
-
-# Preview production build
-```yarn run preview```
-
-
-Open http://localhost:5173
- in your browser after running yarn run dev.
-
-## Scripts
-| Command | Description |
-|---------|-------------|
-| `yarn run dev` | Start the development server |
-| `yarn run build` | Build the app for production |
-| `yarn run preview` | Preview the production build |
-| `yarn run lint` | Run ESLint to check code for errors |
-| `yarn run format` | Format code using Prettier |
-
-## Folder Structure
+# 📁 Project Structure
 ```
 my-react-app/
 ├─ public/
@@ -66,3 +35,12 @@ my-react-app/
 ├─ tsconfig.json
 └─ vite.config.ts
 ```
+
+### Run React Project
+
+```bash
+cd frontend
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
